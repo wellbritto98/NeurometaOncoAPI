@@ -47,27 +47,26 @@ Table endereco {
 
 //Agenda
 Table agenda {
-    psicologo_id varchar [pk,ref: > psicologo.usuario_id]
+    psicologo_id varchar [pk, ref: > psicologo.usuario_id]
     data_agenda datetime [pk]
 }
 
 //Agendamento
 Table agendamento {
     id integer [pk, increment]
-    paciente_id string [ref: > paciente.usuario_id]
-    agenda_data datetime [ref: - agenda.data_agenda]
+    paciente_id string [pk, ref: > paciente.usuario_id]
+    agenda_data datetime [pk, ref: - agenda.data_agenda]
 }
 
 Table sessao {
-    id integer [pk, increment]
-    agendamento_id integer [pk, ref: > agendamento.id]
+    agendamento_id integer [pk, ref: - agendamento.id]
     data_inicio datetime // not null
     data_fim datetime // not null
 }
 
 // Avaliação do psicologo
 Table avaliacao {
-    sessao_id integer [pk, ref: > sessao.id]
+    sessao_id integer [pk, ref: - sessao.agendamento_id]
     nota integer // not null
     comentario varchar(255) // not null
 }
