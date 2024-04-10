@@ -1,0 +1,80 @@
+// Modelagem de dados para um sistema de terapia psicologica online
+
+//Usuário
+Table usuario {
+    id varchar(255) [pk, increment] //GUID
+    nome_completo varchar(255) // not null
+    email varchar(255) // not null
+    cpf varchar(11) // not null 
+    telefone varchar(15) // not null 
+    data_nascimento date // not null
+    genero varchar(1) // not null 
+    senha varchar(255) // not null
+    role varchar // not null
+    email_verificado boolean // not null
+    usuario_aprovado boolean // not null
+    created_at timestamp
+}
+
+//Psicólogo
+Table psicologo {
+    usuario_id varchar [pk, ref: > usuario.id] // Um psicólogo é um usuário
+    crp varchar(255) // not null
+    descricao varchar(255) // not null 
+    carteira_crp blob // not null  
+}
+
+Table paciente {
+    usuario_id varchar [pk, ref: > usuario.id] // Um paciente é um usuário
+    foto_rg_frente blob // not null
+    foto_rg_verso blob // not null
+    comprovante_residencia blob // not null
+    relatorio_medico blob // not null
+    pdf_formatado blob // not null
+}
+
+//Endereço
+Table endereco {
+    usuario_id varchar [pk, ref: - usuario.id] // Um endereço pertence a um usuário
+    cep varchar(8) // not null
+    pais varchar(255) // not null
+    estado varchar(255) // not null
+    cidade varchar(255) // not null
+    logradouro varchar(255) // not null
+    bairro varchar(255) // not null
+    numero varchar(10) // not null
+}
+
+//Agenda
+Table agenda {
+    psicologo_id varchar [pk,ref: > psicologo.usuario_id]
+    data_agenda datetime [pk]
+}
+
+//Agendamento
+Table agendamento {
+    id integer [pk, increment]
+    paciente_id string [ref: > paciente.usuario_id]
+    agenda_data datetime [ref: - agenda.data_agenda]
+}
+
+Table sessao {
+    id integer [pk, increment]
+    agendamento_id integer [pk, ref: > agendamento.id]
+    data_inicio datetime // not null
+    data_fim datetime // not null
+}
+
+// Avaliação do psicologo
+Table avaliacao {
+    sessao_id integer [pk, ref: > sessao.id]
+    nota integer // not null
+    comentario varchar(255) // not null
+}
+
+Table mensagem {
+    usuario_fonte_id integer [pk, ref: > usuario.id]
+    usuario_destino_id integer [pk, ref: > usuario.id]
+    texto varchar(255) // not null
+    data datetime // not null
+}
