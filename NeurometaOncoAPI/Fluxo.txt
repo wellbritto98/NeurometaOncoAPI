@@ -1,0 +1,36 @@
+﻿Fluxo de trabalho
+
+
+1) Criar um model da entidade, de acordo com a modelagem. Sempre herdando de BaseEntity
+
+Domain -> DomainModels -> Models
+
+2) Criar uma interface da entidade. Sempre herdando IGenericRepository. Sugiro copiar 1 arquivo existente, colar e mudar o nome da classe para a entidade em questão
+
+Domain -> DomainCore -> Interfaces -> RepositoryInterfaces
+
+3) Criar o repositorio da entidade. Sempre herdando GenericRepository. Sugiro copiar 1 arquivo existente, colar e mudar o nome da classe para a entidade em questão
+
+Infraestructure -> Repositorys
+
+3.1) Cadastrar o repositorio no Program.CS
+
+4) Criar um mapper da entidade. E cadastrar o profile em BaseProfile, seguind os exemplos
+
+Infraestructure -> Data -> Dtos
+Infraestructure -> Data -> AutoMapperProfiles - BaseProfile.cs (não criar um novo arquivo, adicionar uma linha nova)
+
+5) Cadastrar o DBSet no DataContext
+
+Data -> DataContext.cs
+
+6) Criar o Controller da entidade. Sempre herdando de GenericController. Sugiro copiar 1 arquivo existente, colar e mudar o nome da classe para a entidade em questão
+
+Presentation -> Controllers
+
+7)Criar a migration, para o banco de dados gerar a tabela
+
+dotnet ef migrations add <nome da migration>
+
+dotnet ef database update
+

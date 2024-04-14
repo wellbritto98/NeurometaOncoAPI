@@ -6,7 +6,6 @@ using MimeKit;
 using MimeKit.Text;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using NeurometaOncoAPI.Data.Dtos;
 
 namespace NeurometaOncoAPI.Domain.Services.SmtpService;
 

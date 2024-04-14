@@ -58,12 +58,21 @@ builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<DataContext>();
 builder.Services.AddHttpClient();
+
+
+
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<IExampleRepository, ExampleRepository>();
-builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<JwtService>();
+//CADASTRO DE REPOSITORIO
+builder.Services.AddScoped<IExampleRepository, ExampleRepository>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+
+
+
 builder.Services.AddAutoMapper(typeof(Program).Assembly);  
 builder.Services.AddControllers();
 builder.Services.Configure<IdentityOptions>(options =>
