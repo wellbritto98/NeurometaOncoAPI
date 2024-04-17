@@ -69,7 +69,6 @@ builder.Services.AddScoped<JwtService>();
 //CADASTRO DE REPOSITORIO
 builder.Services.AddScoped<IExampleRepository, ExampleRepository>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
 
 
 

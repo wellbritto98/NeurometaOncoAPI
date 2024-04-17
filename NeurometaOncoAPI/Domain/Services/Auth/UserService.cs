@@ -43,6 +43,7 @@ public class UserService
             user.UserName = user.Email;
             user.Email = user.Email.ToLower();
             user.RegisteredAt = DateTime.UtcNow;
+            
 
             var today = DateTime.Today;
             var age = today.Year - user.DataNascimento.Year;

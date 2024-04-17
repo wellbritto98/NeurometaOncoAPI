@@ -14,8 +14,7 @@ public class User : IdentityUser
     public string RefreshToken { get; set; } = string.Empty;
     public DateTime TokenExpiredAt { get; set; }
     public DateTime TokenCreatedAt { get; set; }
-    [ForeignKey("Endereco")]
-    public int EnderecoId { get; set; }
-    public virtual Endereco Endereco { get; set; }
+    public string EnderecoCompleto { get; set; }
+    public string role { get; set; } = "Paciente";
     
 }

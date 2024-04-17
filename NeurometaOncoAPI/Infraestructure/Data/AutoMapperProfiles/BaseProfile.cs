@@ -12,7 +12,7 @@ public class BaseProfile : Profile
     {
         CreateMap<BaseEntity, Data.Dtos.BaseDto>().ReverseMap();
         CreateMap<ExampleEntity, ExampleDto>().ReverseMap();
-        CreateMap<Endereco, EnderecoDto>().ReverseMap();
+       
 
     }
 

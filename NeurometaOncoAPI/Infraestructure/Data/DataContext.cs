@@ -11,7 +11,7 @@ public class DataContext : IdentityDbContext<User>
     //exemplo de cadastrar o DBset
     public DbSet<ExampleEntity> Examples { get; set; }
     //Adicionar para novas entidades abaixo.
-    public DbSet<Endereco> Enderecos { get; set; }
+  
 
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)

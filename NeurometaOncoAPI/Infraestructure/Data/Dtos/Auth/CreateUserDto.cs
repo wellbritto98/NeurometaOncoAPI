@@ -22,6 +22,12 @@ namespace NeurometaOncoAPI.Infraestructure.Data.Dtos.Auth
         [Required(ErrorMessage = "Você deve concordar com os termos.")]
         public bool AgreeTerms { get; set; }
 
+        [Required]
+        public string EnderecoCompleto { get; set; }
+
+        [Required]
+        public string Role { get; set; } = "Paciente";
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (Password != PasswordConfirmation)
