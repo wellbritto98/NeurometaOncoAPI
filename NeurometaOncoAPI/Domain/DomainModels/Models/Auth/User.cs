@@ -17,4 +17,5 @@ public class User : IdentityUser
     public string EnderecoCompleto { get; set; }
     public string role { get; set; } = "Paciente";
     
+    public virtual ICollection <Paciente> Pacientes { get; set; }
 }

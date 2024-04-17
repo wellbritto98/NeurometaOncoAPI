@@ -12,7 +12,7 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<ExampleEntity> Examples { get; set; }
     //Adicionar para novas entidades abaixo.
   
-
+    public DbSet<Paciente> Pacientes { get; set; }
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {

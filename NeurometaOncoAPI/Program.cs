@@ -68,6 +68,7 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<JwtService>();
 //CADASTRO DE REPOSITORIO
 builder.Services.AddScoped<IExampleRepository, ExampleRepository>();
+builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 
