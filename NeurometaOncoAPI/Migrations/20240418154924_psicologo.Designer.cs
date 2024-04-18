@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NeurometaOncoAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240410024600_first")]
-    partial class first
+    [Migration("20240418154924_psicologo")]
+    partial class psicologo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,31 +157,7 @@ namespace NeurometaOncoAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("NeurometaOncoAPI.Models.ExampleEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Nickname")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Examples");
-                });
-
-            modelBuilder.Entity("NeurometaOncoAPI.Models.User", b =>
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -202,6 +178,10 @@ namespace NeurometaOncoAPI.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("EnderecoCompleto")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("LastLoginAt")
                         .HasColumnType("timestamp with time zone");
@@ -256,6 +236,9 @@ namespace NeurometaOncoAPI.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<string>("role")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -266,6 +249,92 @@ namespace NeurometaOncoAPI.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.ExampleEntity", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Nickname")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Examples");
+                });
+
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Paciente", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text")
+                        .HasColumnOrder(0);
+
+                    b.Property<string>("Cid")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("ComprovanteResidencia")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<int>("CrmMedico")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("FotoRgFrente")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<byte[]>("FotoRgVerso")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("NomeMedico")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("PDFFormatado")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<byte[]>("RelatorioMedico")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("UfCrm")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Pacientes");
+                });
+
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Psicologo", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text")
+                        .HasColumnOrder(0);
+
+                    b.Property<byte[]>("CarteiraCrp")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Crp")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Psicologos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -279,7 +348,7 @@ namespace NeurometaOncoAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("NeurometaOncoAPI.Models.User", null)
+                    b.HasOne("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -288,7 +357,7 @@ namespace NeurometaOncoAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("NeurometaOncoAPI.Models.User", null)
+                    b.HasOne("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -303,7 +372,7 @@ namespace NeurometaOncoAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NeurometaOncoAPI.Models.User", null)
+                    b.HasOne("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -312,11 +381,40 @@ namespace NeurometaOncoAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("NeurometaOncoAPI.Models.User", null)
+                    b.HasOne("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Paciente", b =>
+                {
+                    b.HasOne("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", "User")
+                        .WithMany("Pacientes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Psicologo", b =>
+                {
+                    b.HasOne("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", "User")
+                        .WithMany("Psicologos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", b =>
+                {
+                    b.Navigation("Pacientes");
+
+                    b.Navigation("Psicologos");
                 });
 #pragma warning restore 612, 618
         }

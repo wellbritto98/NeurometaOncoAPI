@@ -18,4 +18,5 @@ public class User : IdentityUser
     public string? role { get; set; }
     
     public virtual ICollection <Paciente> Pacientes { get; set; }
+    public virtual ICollection <Psicologo> Psicologos { get; set; }
 }

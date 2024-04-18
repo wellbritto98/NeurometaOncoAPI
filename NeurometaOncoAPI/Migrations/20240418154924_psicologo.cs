@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NeurometaOncoAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class psicologo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,8 @@ namespace NeurometaOncoAPI.Migrations
                     RefreshToken = table.Column<string>(type: "text", nullable: false),
                     TokenExpiredAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TokenCreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EnderecoCompleto = table.Column<string>(type: "text", nullable: false),
+                    role = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -62,15 +64,13 @@ namespace NeurometaOncoAPI.Migrations
                 name: "Examples",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Nickname = table.Column<string>(type: "text", nullable: false),
                     IsConfirmed = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Examples", x => x.Id);
+                    table.PrimaryKey("PK_Examples", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,6 +179,52 @@ namespace NeurometaOncoAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Pacientes",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    FotoRgFrente = table.Column<byte[]>(type: "bytea", nullable: false),
+                    FotoRgVerso = table.Column<byte[]>(type: "bytea", nullable: false),
+                    ComprovanteResidencia = table.Column<byte[]>(type: "bytea", nullable: false),
+                    RelatorioMedico = table.Column<byte[]>(type: "bytea", nullable: false),
+                    PDFFormatado = table.Column<byte[]>(type: "bytea", nullable: false),
+                    CrmMedico = table.Column<int>(type: "integer", nullable: false),
+                    NomeMedico = table.Column<string>(type: "text", nullable: false),
+                    Cid = table.Column<string>(type: "text", nullable: false),
+                    UfCrm = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pacientes", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_Pacientes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Psicologos",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    Crp = table.Column<string>(type: "text", nullable: false),
+                    Descricao = table.Column<string>(type: "text", nullable: false),
+                    CarteiraCrp = table.Column<byte[]>(type: "bytea", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Psicologos", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_Psicologos_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -237,6 +283,12 @@ namespace NeurometaOncoAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Examples");
+
+            migrationBuilder.DropTable(
+                name: "Pacientes");
+
+            migrationBuilder.DropTable(
+                name: "Psicologos");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

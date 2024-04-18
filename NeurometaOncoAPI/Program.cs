@@ -70,6 +70,7 @@ builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IExampleRepository, ExampleRepository>();
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IPsicologoRepository, PsicologoRepository>();
 
 
 
