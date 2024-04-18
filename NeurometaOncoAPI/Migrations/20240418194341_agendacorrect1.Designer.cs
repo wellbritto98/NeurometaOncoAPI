@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NeurometaOncoAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240418154924_psicologo")]
-    partial class psicologo
+    [Migration("20240418194341_agendacorrect1")]
+    partial class agendacorrect1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,6 +157,40 @@ namespace NeurometaOncoAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Agenda", b =>
+                {
+                    b.Property<string>("PsicologoId")
+                        .HasColumnType("text")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Comentario")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DataFim")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DataInicio")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("Nota")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PacienteId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("PsicologoId", "Data");
+
+                    b.HasIndex("PacienteId");
+
+                    b.ToTable("Agendas");
+                });
+
             modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", b =>
                 {
                     b.Property<string>("Id")
@@ -170,7 +204,7 @@ namespace NeurometaOncoAPI.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -184,7 +218,7 @@ namespace NeurometaOncoAPI.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("LastLoginAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
@@ -218,16 +252,16 @@ namespace NeurometaOncoAPI.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("RegisteredAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("TokenCreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("TokenExpiredAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
@@ -270,7 +304,7 @@ namespace NeurometaOncoAPI.Migrations
 
             modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Paciente", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("PacienteId")
                         .HasColumnType("text")
                         .HasColumnOrder(0);
 
@@ -309,14 +343,14 @@ namespace NeurometaOncoAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("UserId");
+                    b.HasKey("PacienteId");
 
                     b.ToTable("Pacientes");
                 });
 
             modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Psicologo", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("PsicologoId")
                         .HasColumnType("text")
                         .HasColumnOrder(0);
 
@@ -332,7 +366,7 @@ namespace NeurometaOncoAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("UserId");
+                    b.HasKey("PsicologoId");
 
                     b.ToTable("Psicologos");
                 });
@@ -388,11 +422,30 @@ namespace NeurometaOncoAPI.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Agenda", b =>
+                {
+                    b.HasOne("NeurometaOncoAPI.Domain.DomainModels.Models.Paciente", "Paciente")
+                        .WithMany("Agendas")
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NeurometaOncoAPI.Domain.DomainModels.Models.Psicologo", "Psicologo")
+                        .WithMany("Agendas")
+                        .HasForeignKey("PsicologoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Paciente");
+
+                    b.Navigation("Psicologo");
+                });
+
             modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Paciente", b =>
                 {
                     b.HasOne("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", "User")
                         .WithMany("Pacientes")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -403,7 +456,7 @@ namespace NeurometaOncoAPI.Migrations
                 {
                     b.HasOne("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", "User")
                         .WithMany("Psicologos")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("PsicologoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -415,6 +468,16 @@ namespace NeurometaOncoAPI.Migrations
                     b.Navigation("Pacientes");
 
                     b.Navigation("Psicologos");
+                });
+
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Paciente", b =>
+                {
+                    b.Navigation("Agendas");
+                });
+
+            modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Psicologo", b =>
+                {
+                    b.Navigation("Agendas");
                 });
 #pragma warning restore 612, 618
         }

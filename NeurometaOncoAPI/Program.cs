@@ -71,7 +71,10 @@ builder.Services.AddScoped<IExampleRepository, ExampleRepository>();
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IPsicologoRepository, PsicologoRepository>();
+builder.Services.AddScoped<IAgendaRepository, AgendaRepository>();
 
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);  

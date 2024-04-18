@@ -4,17 +4,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NeurometaOncoAPI.Infraestructure.Data.Dtos;
 
-public class PsicologoDto : BaseDto
+public class AgendaDto : BaseDto
 {
 
     [Required]
     public string PsicologoId { get; set; }
     [Required]
-    public string Crp { get; set; }
+    public DateTime Data { get; set; }
     [Required]
-    public string Descricao { get; set; }
-    [Required]
-    public byte[] CarteiraCrp { get; set; }
+    public string PacienteId { get; set; }
+    public DateTime? DataInicio { get; set; }
+    public DateTime? DataFim { get; set; }
+    public int? Nota { get; set; }
+    public string? Comentario { get; set; }
+
+
+
 
 
 

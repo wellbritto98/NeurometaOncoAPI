@@ -14,6 +14,8 @@ public class BaseProfile : Profile
         CreateMap<ExampleEntity, ExampleDto>().ReverseMap();
         CreateMap<Paciente, PacienteDto>().ReverseMap();
         CreateMap<Psicologo, PsicologoDto>().ReverseMap();
+        CreateMap<Agenda, AgendaDto>().ReverseMap();
+     
        
 
     }

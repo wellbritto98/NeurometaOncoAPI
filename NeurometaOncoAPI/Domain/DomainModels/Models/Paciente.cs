@@ -11,7 +11,7 @@ public class Paciente : BaseEntity.BaseEntity
 
     [Key, Column(Order = 0)]
     [ForeignKey("User")]
-    public string UserId {  get; set; }
+    public string PacienteId {  get; set; }
     public virtual User User { get; set; }
     
     public byte[] FotoRgFrente { get; set; }
@@ -23,5 +23,7 @@ public class Paciente : BaseEntity.BaseEntity
     public string NomeMedico { get; set; }
     public string Cid { get; set; }
     public string UfCrm {  get; set; }
+    public virtual ICollection<Agenda> Agendas { get; set; }
+
 
 }

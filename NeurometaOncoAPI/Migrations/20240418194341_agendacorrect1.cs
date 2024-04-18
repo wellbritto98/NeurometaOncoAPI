@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NeurometaOncoAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class psicologo : Migration
+    public partial class agendacorrect1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,12 +32,12 @@ namespace NeurometaOncoAPI.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     Nickname = table.Column<string>(type: "text", nullable: false),
-                    RegisteredAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataNascimento = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastLoginAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    RegisteredAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DataNascimento = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    LastLoginAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     RefreshToken = table.Column<string>(type: "text", nullable: false),
-                    TokenExpiredAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    TokenCreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    TokenExpiredAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    TokenCreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EnderecoCompleto = table.Column<string>(type: "text", nullable: false),
                     role = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -183,7 +183,7 @@ namespace NeurometaOncoAPI.Migrations
                 name: "Pacientes",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "text", nullable: false),
+                    PacienteId = table.Column<string>(type: "text", nullable: false),
                     FotoRgFrente = table.Column<byte[]>(type: "bytea", nullable: false),
                     FotoRgVerso = table.Column<byte[]>(type: "bytea", nullable: false),
                     ComprovanteResidencia = table.Column<byte[]>(type: "bytea", nullable: false),
@@ -196,10 +196,10 @@ namespace NeurometaOncoAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pacientes", x => x.UserId);
+                    table.PrimaryKey("PK_Pacientes", x => x.PacienteId);
                     table.ForeignKey(
-                        name: "FK_Pacientes_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Pacientes_AspNetUsers_PacienteId",
+                        column: x => x.PacienteId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -209,21 +209,55 @@ namespace NeurometaOncoAPI.Migrations
                 name: "Psicologos",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "text", nullable: false),
+                    PsicologoId = table.Column<string>(type: "text", nullable: false),
                     Crp = table.Column<string>(type: "text", nullable: false),
                     Descricao = table.Column<string>(type: "text", nullable: false),
                     CarteiraCrp = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Psicologos", x => x.UserId);
+                    table.PrimaryKey("PK_Psicologos", x => x.PsicologoId);
                     table.ForeignKey(
-                        name: "FK_Psicologos_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Psicologos_AspNetUsers_PsicologoId",
+                        column: x => x.PsicologoId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Agendas",
+                columns: table => new
+                {
+                    PsicologoId = table.Column<string>(type: "text", nullable: false),
+                    Data = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PacienteId = table.Column<string>(type: "text", nullable: false),
+                    DataInicio = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    DataFim = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Nota = table.Column<int>(type: "integer", nullable: true),
+                    Comentario = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Agendas", x => new { x.PsicologoId, x.Data });
+                    table.ForeignKey(
+                        name: "FK_Agendas_Pacientes_PacienteId",
+                        column: x => x.PacienteId,
+                        principalTable: "Pacientes",
+                        principalColumn: "PacienteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Agendas_Psicologos_PsicologoId",
+                        column: x => x.PsicologoId,
+                        principalTable: "Psicologos",
+                        principalColumn: "PsicologoId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Agendas_PacienteId",
+                table: "Agendas",
+                column: "PacienteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -266,6 +300,9 @@ namespace NeurometaOncoAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Agendas");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 

@@ -14,9 +14,13 @@ public class DataContext : IdentityDbContext<User>
   
     public DbSet<Paciente> Pacientes { get; set; }
     public DbSet<Psicologo> Psicologos { get; set; }
+    public DbSet<Agenda> Agendas { get; set; }
+
+
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
 
+        
     }
 }

@@ -41,7 +41,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Migrations\" />
       <Folder Include="Presentation\Controllers\Mail\" />
       <Folder Include="Infraestructure\Data\Dtos\ExampleDtos\" />
       <Folder Include="Domain\DomainCore\Interfaces\ServicesInterfaces\" />

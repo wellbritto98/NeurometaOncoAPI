@@ -8,7 +8,7 @@ public class PacienteDto : BaseDto
 {
 
     [Required]
-    public string UserId { get; set; }
+    public string PacienteId { get; set; }
     [Required]
     public byte[] FotoRgFrente { get; set; }
     [Required]
