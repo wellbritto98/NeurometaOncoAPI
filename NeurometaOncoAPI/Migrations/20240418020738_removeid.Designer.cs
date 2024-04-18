@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NeurometaOncoAPI.Infraestructure.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NeurometaOncoAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240418020738_removeid")]
+    partial class removeid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,6 +237,7 @@ namespace NeurometaOncoAPI.Migrations
                         .HasColumnType("character varying(256)");
 
                     b.Property<string>("role")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -268,8 +272,7 @@ namespace NeurometaOncoAPI.Migrations
             modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Paciente", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text")
-                        .HasColumnOrder(0);
+                        .HasColumnType("text");
 
                     b.Property<string>("Cid")
                         .IsRequired()

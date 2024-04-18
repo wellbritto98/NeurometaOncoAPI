@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NeurometaOncoAPI.Domain.DomainModels.Models.BaseEntity;
 using NeurometaOncoAPI.Infraestructure.Data;
+using Newtonsoft.Json;
 
 namespace NeurometaOncoAPI.Infraestructure.Repositorys.GenericRepository;
 
@@ -18,9 +19,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return await _context.Set<T>().ToListAsync();
     }
 
-    public async Task<T> GetByIdAsync(int id)
+    public async Task<T> GetByIdAsync(params Object[] keyValues)
     {
-        return await _context.Set<T>().FindAsync(id);
+        return await _context.Set<T>().FindAsync(keyValues);
     }
 
     public async Task<T> AddAsync(T entity)
@@ -36,9 +37,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(params object[] keyValues)
     {
-        var entity = await _context.Set<T>().FindAsync(id);
+        var entity = await _context.Set<T>().FindAsync(keyValues);
         if (entity != null)
         {
             _context.Set<T>().Remove(entity);

@@ -13,7 +13,9 @@ Table usuario {
     role varchar // not null
     email_verificado boolean // not null
     usuario_aprovado boolean // not null
+    endereco_completo varchar(255) // not null
     created_at timestamp
+
 }
 
 //Psicólogo
@@ -31,18 +33,11 @@ Table paciente {
     comprovante_residencia blob // not null
     relatorio_medico blob // not null
     pdf_formatado blob // not null
-}
+    crm_medico integer // not null
+nome_medico varchar(255) // not null
+cid varchar(255) // not null
+uf_crm varchar(2) // not null
 
-//Endereço
-Table endereco {
-    usuario_id varchar [pk, ref: - usuario.id] // Um endereço pertence a um usuário
-    cep varchar(8) // not null
-    pais varchar(255) // not null
-    estado varchar(255) // not null
-    cidade varchar(255) // not null
-    logradouro varchar(255) // not null
-    bairro varchar(255) // not null
-    numero varchar(10) // not null
 }
 
 //Agenda
@@ -77,3 +72,25 @@ Table mensagem {
     texto varchar(255) // not null
     data datetime // not null
 }
+/*
+public class Paciente : BaseEntity.BaseEntity
+{
+
+    [Key]
+    [ForeignKey("User")]
+    public string UserId {  get; set; }
+    public virtual User User { get; set; }
+    
+    public byte[] FotoRgFrente { get; set; }
+    public byte[] FotoRgVerso {  get; set; }
+    public byte[] ComprovanteResidencia { get; set; }
+    public byte[] RelatorioMedico { get; set; }
+    public byte[] PDFFormatado { get; set; }
+    public int CrmMedico { get; set; }
+    public string NomeMedico { get; set; }
+    public string Cid { get; set; }
+    public string UfCrm {  get; set; }
+
+}
+
+*/

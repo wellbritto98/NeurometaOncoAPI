@@ -15,7 +15,7 @@ public class User : IdentityUser
     public DateTime TokenExpiredAt { get; set; }
     public DateTime TokenCreatedAt { get; set; }
     public string EnderecoCompleto { get; set; }
-    public string role { get; set; } = "Paciente";
+    public string? role { get; set; }
     
     public virtual ICollection <Paciente> Pacientes { get; set; }
 }

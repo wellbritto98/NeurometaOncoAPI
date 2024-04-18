@@ -9,7 +9,7 @@ namespace NeurometaOncoAPI.Domain.DomainModels.Models;
 public class Paciente : BaseEntity.BaseEntity
 {
 
-    [Key]
+    [Key, Column(Order = 0)]
     [ForeignKey("User")]
     public string UserId {  get; set; }
     public virtual User User { get; set; }

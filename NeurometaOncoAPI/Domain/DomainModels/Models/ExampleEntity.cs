@@ -5,6 +5,7 @@ namespace NeurometaOncoAPI.Domain.DomainModels.Models;
 
 public class ExampleEntity : BaseEntity.BaseEntity
 {
+    [Key]
     [Required]
     public string Name { get; set; }
     [Required]
