@@ -7,7 +7,7 @@ using NeurometaOncoAPI.Domain.DomainModels.Models.Auth;
 using NeurometaOncoAPI.Domain.DomainModels.Models.BaseEntity;
 
 namespace NeurometaOncoAPI.Domain.DomainModels.Models;
-[PrimaryKey(nameof(PsicologoId), nameof(Data))]
+[PrimaryKey(nameof(PsicologoId), nameof(Data), nameof(PacienteId))]
 public class Agenda : BaseEntity.BaseEntity
 {
 

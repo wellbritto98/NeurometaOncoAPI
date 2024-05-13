@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NeurometaOncoAPI.Domain.Services.Auth;
 using NeurometaOncoAPI.Infraestructure.Data.Dtos.Auth;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace NeurometaOncoAPI.Presentation.Controllers.Identity;
 
@@ -15,6 +16,10 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("RegisterUser")]
+    [SwaggerOperation(
+               Summary = "Cria um novo usuário",
+               Description = "Cria um novo usuário no sistema"
+           )]
 
     public async Task<IActionResult> Register([FromBody] RegisterUserDto registerUserDto)
     {
@@ -32,6 +37,10 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("LoginUser")]
+    [SwaggerOperation(
+                      Summary = "Faz login de um usuário",
+                      Description = "Faz login de um usuário no sistema"
+                  )]
     public async Task<IActionResult> Login([FromBody] LoginUserDto loginUserDto)
     {
         if (!ModelState.IsValid)
@@ -49,6 +58,10 @@ public class UserController : ControllerBase
 
     [HttpPost("RefreshToken")]
     [Authorize]
+    [SwaggerOperation(
+                             Summary = "Atualiza o token de um usuário",
+                             Description = "Atualiza o token de um usuário no sistema recebendo o refreshToken do usuario"
+                         )]
     public async Task<IActionResult> RefreshToken()
     {
         if (!ModelState.IsValid)

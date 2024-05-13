@@ -31,10 +31,19 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return entity;
     }
 
-    public async Task UpdateAsync(T entity)
+    public async Task<int> UpdateAsync(T entity)
     {
-        _context.Entry(entity).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
+        try
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+            var updatedEntity = await _context.SaveChangesAsync();
+            return updatedEntity;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+
     }
 
     public async Task DeleteAsync(params object[] keyValues)

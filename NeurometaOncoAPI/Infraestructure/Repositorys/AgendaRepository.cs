@@ -15,15 +15,30 @@ public class AgendaRepository : GenericRepository<Agenda>, IAgendaRepository
         _context = context;
     }
 
-    public async Task<List<Agenda>> GetAgendasOcupadas()
+    public async Task<List<Agenda>> GetAgendasOcupadas(string psicologoId)
     {
-        List<Agenda> agendas = await _context.Agendas.ToListAsync();
+        List<Agenda> agendas = await _context.Agendas.Where(w => w.PsicologoId == psicologoId).ToListAsync();
         return agendas.Where(a => a.Data > DateTime.Now).ToList();
     }
 
-    public async Task<List<Agenda>> GetConsultasConcluidas()
+    public async Task<List<Agenda>> GetConsultasConcluidasByPacienteId(string pacienteId)
     {
-        return await _context.Agendas.Where(a => a.DataFim != null && a.DataInicio != null).ToListAsync();
+        return await _context.Agendas.Where(a => a.DataFim != null && a.DataInicio != null && a.PacienteId == pacienteId).ToListAsync();
+    }
+
+    public async Task<List<Agenda>> GetConsultasConcluidasByPsicologoId(string psicologoId)
+    {
+        return await _context.Agendas.Where(a => a.DataFim != null && a.DataInicio != null && a.PacienteId == psicologoId).ToListAsync();
+    }
+
+    public async Task<List<Agenda>> GetAgendasByPacienteId(string pacienteId)
+    {
+        return await _context.Agendas.Where(a => a.PacienteId == pacienteId).ToListAsync();
+    }
+
+    public async Task<List<Agenda>> GetAgendasByPsicologoId(string psicologoId)
+    {
+        return await _context.Agendas.Where(a => a.PsicologoId == psicologoId).ToListAsync();
     }
 
 
