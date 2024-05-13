@@ -164,6 +164,10 @@ namespace NeurometaOncoAPI.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnOrder(1);
 
+                    b.Property<string>("PacienteId")
+                        .HasColumnType("text")
+                        .HasColumnOrder(2);
+
                     b.Property<string>("Comentario")
                         .HasColumnType("text");
 
@@ -176,12 +180,7 @@ namespace NeurometaOncoAPI.Migrations
                     b.Property<int?>("Nota")
                         .HasColumnType("integer");
 
-                    b.Property<string>("PacienteId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnOrder(2);
-
-                    b.HasKey("PsicologoId", "Data");
+                    b.HasKey("PsicologoId", "Data", "PacienteId");
 
                     b.HasIndex("PacienteId");
 
