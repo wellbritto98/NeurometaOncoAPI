@@ -80,7 +80,16 @@ builder.Services.AddScoped<IAgendaRepository, AgendaRepository>();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 builder.Services.AddAutoMapper(typeof(Program).Assembly);  
 builder.Services.AddControllers();
 builder.Services.Configure<IdentityOptions>(options =>
@@ -103,7 +112,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapIdentityApi<User>();
-
+app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.MapControllers();
 
