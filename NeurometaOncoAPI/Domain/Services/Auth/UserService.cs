@@ -43,7 +43,12 @@ public class UserService
             user.UserName = user.Email;
             user.Email = user.Email.ToLower();
             user.RegisteredAt = DateTime.UtcNow;
-            
+            if(dto.Role.ToUpper() != "PACIENTE" || dto.Role.ToUpper() != "PSICOLOGO")
+            {
+                return new ApiResponse { Success = false, Message = "Role não encontrada!" };
+            }
+            user.role = dto.Role.ToUpper()=="PACIENTE" ? "Paciente" : "Psicologo";
+           
 
             var today = DateTime.Today;
             var age = today.Year - user.DataNascimento.Year;
@@ -69,6 +74,7 @@ public class UserService
             }
 
             IdentityResult resultado = await _userManager.CreateAsync(user, dto.Password);
+            await _userManager.AddToRoleAsync(user, dto.Role.ToUpper()=="PACIENTE" ? "Paciente" : "Psicologo");
 
             if (!resultado.Succeeded)
             {
@@ -132,7 +138,7 @@ public class UserService
 
         if (resultado.Succeeded)
         {
-            var token = _jwtService.GenerateToken(new JwtDto { Email = user.Email, Id = user.Id });
+            var token = _jwtService.GenerateToken(new JwtDto { Email = user.Email, Id = user.Id, Role= user.role});
             _httpContextAccessor.HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
             {
                 HttpOnly = true,

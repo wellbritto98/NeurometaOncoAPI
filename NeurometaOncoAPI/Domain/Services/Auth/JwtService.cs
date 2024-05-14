@@ -22,7 +22,8 @@ public class JwtService
         Claim[] claims = new Claim[]
         {
              new Claim(ClaimTypes.Email, dto.Email),
-             new Claim("id", dto.Id)
+             new Claim("id", dto.Id),
+             new Claim(ClaimTypes.Role, dto.Role)
         };
 
         var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));

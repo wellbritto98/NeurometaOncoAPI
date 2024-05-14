@@ -6,11 +6,12 @@ namespace NeurometaOncoAPI.Domain.DomainModels.Models.Auth;
 public class User : IdentityUser
 {
 
-    public string Nickname { get; set; }
+    public string Nome { get; set; }
 
     public DateTime RegisteredAt { get; set; }
     public DateTime DataNascimento { get; set; }
     public DateTime? LastLoginAt { get; set; }
+    public byte[] FotoPerfil { get; set; }
     public string RefreshToken { get; set; } = string.Empty;
     public DateTime TokenExpiredAt { get; set; }
     public DateTime TokenCreatedAt { get; set; }

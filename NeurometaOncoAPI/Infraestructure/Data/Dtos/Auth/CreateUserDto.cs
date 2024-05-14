@@ -12,7 +12,8 @@ namespace NeurometaOncoAPI.Infraestructure.Data.Dtos.Auth
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public string Nickname { get; set; }
+        [Required]
+        public string Nome { get; set; }
 
         [Required]
         [Compare("Password", ErrorMessage = "A senha de confirmação deve ser igual à senha.")]

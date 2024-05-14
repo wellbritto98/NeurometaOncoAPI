@@ -8,6 +8,8 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace NeurometaOncoAPI.Presentation.Controllers;
 
+[SwaggerTag("Chaves primarias: PsicologoId, Data, PacienteId")]
+
 public class AgendaController : GenericController<Agenda, AgendaDto>
 {
     protected readonly IAgendaRepository _repository;
