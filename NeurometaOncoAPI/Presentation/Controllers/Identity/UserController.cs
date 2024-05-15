@@ -43,12 +43,102 @@ public class UserController : ControllerBase
                   )]
     public async Task<IActionResult> Login([FromBody] LoginUserDto loginUserDto)
     {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _userService.LoginUser(loginUserDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+    [HttpGet("GetById/{id}")]
+    [Authorize]
+    [SwaggerOperation(
+        Summary = "Retorna um usuário pelo ID",
+        Description = "Retorna usuario. Use somente o ID do usuario")]
+    public async Task<IActionResult> GetById(string id)
+    {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var result = await _userService.LoginUser(loginUserDto);
+        var result = await _userService.GetById(id);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest(result);
+    }
+
+    [HttpGet("GetAll")]
+    [Authorize]
+    [SwaggerOperation(
+               Summary = "Retorna uma lista de usuários",
+               Description = "Retorna")]
+    public async Task<IActionResult> GetAll()
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var result = await _userService.GetAll();
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest(result);
+    }
+
+    [HttpPut("UpdateUser/{id}")]
+    [Authorize]
+    [SwaggerOperation(
+                      Summary = "Atualiza um usuário",
+                      Description = "Atualiza um usuário no sistema. Use somente o ID do usuario"
+                  )]
+    public async Task<IActionResult> UpdateUser([FromBody] GetUserDto getUserDto, string id)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var result = await _userService.Update(id, getUserDto);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest(result);
+    }
+
+    [HttpDelete("DeleteUser/{id}")]
+    [Authorize]
+    [SwaggerOperation(
+                             Summary = "Deleta um usuário",
+                             Description = "Deleta um usuário no sistema"
+                         )]
+    public async Task<IActionResult> DeleteUser(string id)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var result = await _userService.Delete(id);
         if (result.Success)
         {
             return Ok(result);
@@ -76,4 +166,6 @@ public class UserController : ControllerBase
         }
         return BadRequest(result);
     }
+
+
 }

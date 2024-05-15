@@ -14,6 +14,7 @@ public class Psicologo : BaseEntity.BaseEntity
     public string PsicologoId {  get; set; }
     public virtual User User { get; set; }
     public string Crp { get; set; }
+    public string Especialidade { get; set; }
     public string Descricao { get; set; }
     public byte[] CarteiraCrp { get; set; }
     public virtual ICollection<Agenda> Agendas { get; set; }

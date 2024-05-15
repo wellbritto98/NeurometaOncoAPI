@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -90,8 +91,11 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
-builder.Services.AddAutoMapper(typeof(Program).Assembly);  
-builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
@@ -104,11 +108,10 @@ builder.Services.Configure<IdentityOptions>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapIdentityApi<User>();

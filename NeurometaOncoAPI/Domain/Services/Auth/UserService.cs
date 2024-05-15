@@ -43,12 +43,12 @@ public class UserService
             user.UserName = user.Email;
             user.Email = user.Email.ToLower();
             user.RegisteredAt = DateTime.UtcNow;
-            if(dto.Role.ToUpper() != "PACIENTE" || dto.Role.ToUpper() != "PSICOLOGO")
+            if (dto.Role.ToUpper() != "PACIENTE" && dto.Role.ToUpper() != "PSICOLOGO")
             {
                 return new ApiResponse { Success = false, Message = "Role não encontrada!" };
             }
             user.role = dto.Role.ToUpper()=="PACIENTE" ? "Paciente" : "Psicologo";
-           
+
 
             var today = DateTime.Today;
             var age = today.Year - user.DataNascimento.Year;
@@ -83,7 +83,7 @@ public class UserService
                 { Success = false, Message = $"Falha ao cadastrar usuário: {string.Join(", ", errors)}" };
             }
 
-            var endpoint = "https://localhost:7225/resendConfirmationEmail";
+            var endpoint = "https://neurometaoncoapi.azurewebsites.net/resendConfirmationEmail";
             var payload = new { email = user.Email };
             var json = JsonConvert.SerializeObject(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -124,39 +124,47 @@ public class UserService
 
     public async Task<ApiResponse> LoginUser(LoginUserDto dto)
     {
-        var user = await _userManager.FindByEmailAsync(dto.Email);
-        if (user == null)
+        try
         {
-            return new ApiResponse { Success = false, Message = "Usuário não encontrado" };
-        }
-        else if (user.EmailConfirmed != true)
-        {
-            return new ApiResponse { Success = false, Message = "Email não confirmado" };
-        }
-
-        var resultado = await _signInManager.PasswordSignInAsync(user, dto.Password, false, true);
-
-        if (resultado.Succeeded)
-        {
-            var token = _jwtService.GenerateToken(new JwtDto { Email = user.Email, Id = user.Id, Role= user.role});
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
+            var user = await _userManager.FindByEmailAsync(dto.Email);
+            if (user == null)
             {
-                HttpOnly = true,
-                SameSite = SameSiteMode.None,
-                Secure = true
-            });
-
-            var refreshToken = GenerateRefreshToken();
-            SetRefreshTokenInCookie(refreshToken);
-
-            return new ApiResponse
+                return new ApiResponse { Success = false, Message = "Usuário não encontrado" };
+            }
+            else if (user.EmailConfirmed != true)
             {
-                Success = true,
-                Message = "Usuário logado com sucesso",
-                Data = new { Token = token, RefreshToken = refreshToken }
-            };
+                return new ApiResponse { Success = false, Message = "Email não confirmado" };
+            }
+
+            var resultado = await _signInManager.PasswordSignInAsync(user, dto.Password, false, true);
+
+            if (resultado.Succeeded)
+            {
+                var token = _jwtService.GenerateToken(new JwtDto { Email = user.Email, Id = user.Id, Role= user.role });
+                _httpContextAccessor.HttpContext.Response.Cookies.Append("jwt", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    SameSite = SameSiteMode.None,
+                    Secure = true
+                });
+
+                var refreshToken = GenerateRefreshToken();
+                SetRefreshTokenInCookie(refreshToken);
+
+                return new ApiResponse
+                {
+                    Success = true,
+                    Message = "Usuário logado com sucesso",
+                    Data = new { Token = token, RefreshToken = refreshToken }
+                };
+            }
+            else
+            {
+                return new ApiResponse { Success = false, Message = "Falha ao logar usuário" };
+            }   
         }
-        else
+
+        catch (Exception ex)
         {
             return new ApiResponse { Success = false, Message = "Falha ao logar usuário" };
         }
@@ -189,6 +197,68 @@ public class UserService
             user.TokenCreatedAt = refreshToken.CreatedAt;
             user.TokenExpiredAt = refreshToken.Expired;
             _userManager.UpdateAsync(user);
+        }
+    }
+
+    //GetById
+    public async Task<ApiResponse> GetById(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return new ApiResponse { Success = false, Message = "Usuário não encontrado" };
+        }
+
+        var userDto = _mapper.Map<GetUserDto>(user);
+        return new ApiResponse { Success = true, Data = userDto };
+    }
+
+    //GetAll
+    public async Task<ApiResponse> GetAll()
+    {
+        var users = _userManager.Users.ToList();
+        var usersDto = _mapper.Map<List<GetUserDto>>(users);
+        return new ApiResponse { Success = true, Data = usersDto };
+    }
+
+    //Delete
+    public async Task<ApiResponse> Delete(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return new ApiResponse { Success = false, Message = "Usuário não encontrado" };
+        }
+
+        var result = await _userManager.DeleteAsync(user);
+        if (result.Succeeded)
+        {
+            return new ApiResponse { Success = true, Message = "Usuário deletado com sucesso" };
+        }
+        else
+        {
+            return new ApiResponse { Success = false, Message = "Falha ao deletar usuário" };
+        }
+    }
+
+    //Update
+    public async Task<ApiResponse> Update(string id, GetUserDto dto)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return new ApiResponse { Success = false, Message = "Usuário não encontrado" };
+        }
+
+        var userDto = _mapper.Map(dto, user);
+        var result = await _userManager.UpdateAsync(userDto);
+        if (result.Succeeded)
+        {
+            return new ApiResponse { Success = true, Message = "Usuário atualizado com sucesso" };
+        }
+        else
+        {
+            return new ApiResponse { Success = false, Message = "Falha ao atualizar usuário" };
         }
     }
 

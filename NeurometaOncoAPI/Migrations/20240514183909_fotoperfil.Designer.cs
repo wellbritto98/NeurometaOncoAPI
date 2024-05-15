@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NeurometaOncoAPI.Infraestructure.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NeurometaOncoAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240514183909_fotoperfil")]
+    partial class fotoperfil
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,62 +160,62 @@ namespace NeurometaOncoAPI.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "46cc5a6f-e612-42ca-a969-bb6ca507ec71",
+                            UserId = "59455323-cec2-4ca4-b885-8e290e6507f0",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7212"
                         },
                         new
                         {
-                            UserId = "767351ac-1687-46d0-b7fe-9e64f801c009",
+                            UserId = "8fb2a5af-2667-48f5-bc1f-1418d9a3424f",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7212"
                         },
                         new
                         {
-                            UserId = "d26a8f97-bfc2-4cdc-b3c0-b9fa998ad5f9",
+                            UserId = "c2a276ae-f9af-468d-a593-f60a7c2be4be",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7212"
                         },
                         new
                         {
-                            UserId = "66a805db-f7f6-4948-8558-1c2abdd7cf2c",
+                            UserId = "a6dc25d5-fab9-4c1c-8391-5b2d5c61a2cc",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7212"
                         },
                         new
                         {
-                            UserId = "a58404da-ceff-4fd2-9ec4-d749a0e136f7",
+                            UserId = "6181b44d-1521-439b-88f3-b38a60de7738",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7212"
                         },
                         new
                         {
-                            UserId = "f95747e3-80c2-4261-a1dc-e3e0dd773d57",
+                            UserId = "35e2e315-bf33-42c7-9c8d-1799232c7732",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7212"
                         },
                         new
                         {
-                            UserId = "2f4106df-6cee-42f9-a22e-8d65d994b824",
+                            UserId = "b60d1814-691e-4e29-bb62-38e5dee79076",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7211"
                         },
                         new
                         {
-                            UserId = "3f38348a-bf9d-4ed5-97af-a09cc965ca2e",
+                            UserId = "7771539c-6f47-4041-acb8-d82b7af6de5c",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7211"
                         },
                         new
                         {
-                            UserId = "10c0fcd0-efa0-453f-bdfd-9dc231bdea0d",
+                            UserId = "3b3b7737-5864-4b5d-be9f-d41b3406f805",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7211"
                         },
                         new
                         {
-                            UserId = "b7deb289-28b8-4cb6-8f0d-c1845aff8421",
+                            UserId = "dc8d159a-5554-4420-bc6d-e8d6f7ece9c4",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7211"
                         },
                         new
                         {
-                            UserId = "d6d527ad-d610-40d6-9f8b-0da55ba1d2e2",
+                            UserId = "818eb11a-079d-4415-810a-571ff6bc8bab",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7211"
                         },
                         new
                         {
-                            UserId = "d008bf53-5d61-41de-96e9-877b48d74beb",
+                            UserId = "d1b349a8-ae25-4920-8190-80c4608b2dd1",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7211"
                         });
                 });
@@ -267,140 +270,6 @@ namespace NeurometaOncoAPI.Migrations
                     b.HasIndex("PacienteId");
 
                     b.ToTable("Agendas");
-
-                    b.HasData(
-                        new
-                        {
-                            PsicologoId = "46cc5a6f-e612-42ca-a969-bb6ca507ec71",
-                            Data = new DateTime(2024, 5, 14, 13, 1, 13, 414, DateTimeKind.Local).AddTicks(4108),
-                            PacienteId = "2f4106df-6cee-42f9-a22e-8d65d994b824",
-                            Comentario = "Consulta concluída",
-                            DataFim = new DateTime(2024, 5, 14, 14, 1, 13, 414, DateTimeKind.Local).AddTicks(4150),
-                            DataInicio = new DateTime(2024, 5, 14, 13, 1, 13, 414, DateTimeKind.Local).AddTicks(4144),
-                            Nota = 10
-                        },
-                        new
-                        {
-                            PsicologoId = "46cc5a6f-e612-42ca-a969-bb6ca507ec71",
-                            Data = new DateTime(2024, 5, 15, 13, 1, 13, 414, DateTimeKind.Local).AddTicks(4189),
-                            PacienteId = "2f4106df-6cee-42f9-a22e-8d65d994b824"
-                        },
-                        new
-                        {
-                            PsicologoId = "46cc5a6f-e612-42ca-a969-bb6ca507ec71",
-                            Data = new DateTime(2024, 5, 16, 13, 1, 13, 414, DateTimeKind.Local).AddTicks(4199),
-                            PacienteId = "2f4106df-6cee-42f9-a22e-8d65d994b824"
-                        },
-                        new
-                        {
-                            PsicologoId = "767351ac-1687-46d0-b7fe-9e64f801c009",
-                            Data = new DateTime(2024, 5, 14, 13, 1, 13, 494, DateTimeKind.Local).AddTicks(4321),
-                            PacienteId = "3f38348a-bf9d-4ed5-97af-a09cc965ca2e",
-                            Comentario = "Consulta concluída",
-                            DataFim = new DateTime(2024, 5, 14, 14, 1, 13, 494, DateTimeKind.Local).AddTicks(4486),
-                            DataInicio = new DateTime(2024, 5, 14, 13, 1, 13, 494, DateTimeKind.Local).AddTicks(4338),
-                            Nota = 10
-                        },
-                        new
-                        {
-                            PsicologoId = "767351ac-1687-46d0-b7fe-9e64f801c009",
-                            Data = new DateTime(2024, 5, 15, 13, 1, 13, 494, DateTimeKind.Local).AddTicks(4520),
-                            PacienteId = "3f38348a-bf9d-4ed5-97af-a09cc965ca2e"
-                        },
-                        new
-                        {
-                            PsicologoId = "767351ac-1687-46d0-b7fe-9e64f801c009",
-                            Data = new DateTime(2024, 5, 16, 13, 1, 13, 494, DateTimeKind.Local).AddTicks(4550),
-                            PacienteId = "3f38348a-bf9d-4ed5-97af-a09cc965ca2e"
-                        },
-                        new
-                        {
-                            PsicologoId = "d26a8f97-bfc2-4cdc-b3c0-b9fa998ad5f9",
-                            Data = new DateTime(2024, 5, 14, 13, 1, 13, 565, DateTimeKind.Local).AddTicks(2826),
-                            PacienteId = "10c0fcd0-efa0-453f-bdfd-9dc231bdea0d",
-                            Comentario = "Consulta concluída",
-                            DataFim = new DateTime(2024, 5, 14, 14, 1, 13, 565, DateTimeKind.Local).AddTicks(2843),
-                            DataInicio = new DateTime(2024, 5, 14, 13, 1, 13, 565, DateTimeKind.Local).AddTicks(2838),
-                            Nota = 10
-                        },
-                        new
-                        {
-                            PsicologoId = "d26a8f97-bfc2-4cdc-b3c0-b9fa998ad5f9",
-                            Data = new DateTime(2024, 5, 15, 13, 1, 13, 565, DateTimeKind.Local).AddTicks(2860),
-                            PacienteId = "10c0fcd0-efa0-453f-bdfd-9dc231bdea0d"
-                        },
-                        new
-                        {
-                            PsicologoId = "d26a8f97-bfc2-4cdc-b3c0-b9fa998ad5f9",
-                            Data = new DateTime(2024, 5, 16, 13, 1, 13, 565, DateTimeKind.Local).AddTicks(2950),
-                            PacienteId = "10c0fcd0-efa0-453f-bdfd-9dc231bdea0d"
-                        },
-                        new
-                        {
-                            PsicologoId = "66a805db-f7f6-4948-8558-1c2abdd7cf2c",
-                            Data = new DateTime(2024, 5, 14, 13, 1, 13, 631, DateTimeKind.Local).AddTicks(5320),
-                            PacienteId = "b7deb289-28b8-4cb6-8f0d-c1845aff8421",
-                            Comentario = "Consulta concluída",
-                            DataFim = new DateTime(2024, 5, 14, 14, 1, 13, 631, DateTimeKind.Local).AddTicks(5336),
-                            DataInicio = new DateTime(2024, 5, 14, 13, 1, 13, 631, DateTimeKind.Local).AddTicks(5323),
-                            Nota = 10
-                        },
-                        new
-                        {
-                            PsicologoId = "66a805db-f7f6-4948-8558-1c2abdd7cf2c",
-                            Data = new DateTime(2024, 5, 15, 13, 1, 13, 631, DateTimeKind.Local).AddTicks(5352),
-                            PacienteId = "b7deb289-28b8-4cb6-8f0d-c1845aff8421"
-                        },
-                        new
-                        {
-                            PsicologoId = "66a805db-f7f6-4948-8558-1c2abdd7cf2c",
-                            Data = new DateTime(2024, 5, 16, 13, 1, 13, 631, DateTimeKind.Local).AddTicks(5357),
-                            PacienteId = "b7deb289-28b8-4cb6-8f0d-c1845aff8421"
-                        },
-                        new
-                        {
-                            PsicologoId = "a58404da-ceff-4fd2-9ec4-d749a0e136f7",
-                            Data = new DateTime(2024, 5, 14, 13, 1, 13, 714, DateTimeKind.Local).AddTicks(5378),
-                            PacienteId = "d6d527ad-d610-40d6-9f8b-0da55ba1d2e2",
-                            Comentario = "Consulta concluída",
-                            DataFim = new DateTime(2024, 5, 14, 14, 1, 13, 714, DateTimeKind.Local).AddTicks(5415),
-                            DataInicio = new DateTime(2024, 5, 14, 13, 1, 13, 714, DateTimeKind.Local).AddTicks(5388),
-                            Nota = 10
-                        },
-                        new
-                        {
-                            PsicologoId = "a58404da-ceff-4fd2-9ec4-d749a0e136f7",
-                            Data = new DateTime(2024, 5, 15, 13, 1, 13, 714, DateTimeKind.Local).AddTicks(5457),
-                            PacienteId = "d6d527ad-d610-40d6-9f8b-0da55ba1d2e2"
-                        },
-                        new
-                        {
-                            PsicologoId = "a58404da-ceff-4fd2-9ec4-d749a0e136f7",
-                            Data = new DateTime(2024, 5, 16, 13, 1, 13, 714, DateTimeKind.Local).AddTicks(5465),
-                            PacienteId = "d6d527ad-d610-40d6-9f8b-0da55ba1d2e2"
-                        },
-                        new
-                        {
-                            PsicologoId = "f95747e3-80c2-4261-a1dc-e3e0dd773d57",
-                            Data = new DateTime(2024, 5, 14, 13, 1, 13, 799, DateTimeKind.Local).AddTicks(5958),
-                            PacienteId = "d008bf53-5d61-41de-96e9-877b48d74beb",
-                            Comentario = "Consulta concluída",
-                            DataFim = new DateTime(2024, 5, 14, 14, 1, 13, 799, DateTimeKind.Local).AddTicks(6126),
-                            DataInicio = new DateTime(2024, 5, 14, 13, 1, 13, 799, DateTimeKind.Local).AddTicks(5963),
-                            Nota = 10
-                        },
-                        new
-                        {
-                            PsicologoId = "f95747e3-80c2-4261-a1dc-e3e0dd773d57",
-                            Data = new DateTime(2024, 5, 15, 13, 1, 13, 799, DateTimeKind.Local).AddTicks(6142),
-                            PacienteId = "d008bf53-5d61-41de-96e9-877b48d74beb"
-                        },
-                        new
-                        {
-                            PsicologoId = "f95747e3-80c2-4261-a1dc-e3e0dd773d57",
-                            Data = new DateTime(2024, 5, 16, 13, 1, 13, 799, DateTimeKind.Local).AddTicks(6272),
-                            PacienteId = "d008bf53-5d61-41de-96e9-877b48d74beb"
-                        });
                 });
 
             modelBuilder.Entity("NeurometaOncoAPI.Domain.DomainModels.Models.Auth.User", b =>
@@ -429,8 +298,8 @@ namespace NeurometaOncoAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("FotoPerfil")
-                        .HasColumnType("text");
+                    b.Property<byte[]>("FotoPerfil")
+                        .HasColumnType("bytea");
 
                     b.Property<DateTime?>("LastLoginAt")
                         .HasColumnType("timestamp without time zone");
@@ -503,22 +372,22 @@ namespace NeurometaOncoAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "46cc5a6f-e612-42ca-a969-bb6ca507ec71",
+                            Id = "59455323-cec2-4ca4-b885-8e290e6507f0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3b5611ab-5b4d-4967-b861-54c59df6273c",
+                            ConcurrencyStamp = "d05526b5-3cb4-4ca1-95a6-828db34da932",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user1@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 1",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 1",
                             NormalizedEmail = "USER1@EXAMPLE.COM",
                             NormalizedUserName = "USER1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBEdKhIHzg+cHbkXbHRZbiYFXsbp30+El9H7ASVpE7/igYieVZbAT+ug3NX+m1eShA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE1Lc8v6kilq4o18kBqO7XUAqA58AZnI/P4ip1cQq7Rjf9wE4osKhPhJhjryeof0Jg==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 12, 877, DateTimeKind.Local).AddTicks(2043),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 7, 694, DateTimeKind.Local).AddTicks(4041),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -528,22 +397,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "767351ac-1687-46d0-b7fe-9e64f801c009",
+                            Id = "8fb2a5af-2667-48f5-bc1f-1418d9a3424f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "61559cea-4d23-41a8-a497-6e8ec22a18ec",
+                            ConcurrencyStamp = "2ced5e81-e1ff-4759-9f76-3dafb5159b24",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user2@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 2",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 2",
                             NormalizedEmail = "USER2@EXAMPLE.COM",
                             NormalizedUserName = "USER2",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDLt+nazC4rD5s1mGpaagwauwPpDyRfIRsbOKH+eD6KSPMJkTJON8G0+k8tR/0zx5Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPn42mc3ZScCIbASTIMiz/sz4FRWhLcei2sb95vqLZ1XEaeExCKxhweHuWnNCT0TLQ==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 12, 959, DateTimeKind.Local).AddTicks(615),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 7, 759, DateTimeKind.Local).AddTicks(3593),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -553,22 +422,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "d26a8f97-bfc2-4cdc-b3c0-b9fa998ad5f9",
+                            Id = "c2a276ae-f9af-468d-a593-f60a7c2be4be",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a393567d-d563-4945-9aa0-ca61462ecfa2",
+                            ConcurrencyStamp = "76d037a8-2b30-4851-9bd7-4720060fba20",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user3@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 3",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 3",
                             NormalizedEmail = "USER3@EXAMPLE.COM",
                             NormalizedUserName = "USER3",
-                            PasswordHash = "AQAAAAIAAYagAAAAED/m4L9r+bU3yefnPC4xp3SOydjgKkVzTs8GO++KB5ZkA3kCjXCDiqilcpxZmBtrAw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOSYY5ui5xPGQvO76VnQpeV6PQmIJHY/5D/8haxaf41OqAGx61iz3P+u+G3pGqH8Gg==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 13, 54, DateTimeKind.Local).AddTicks(7386),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 7, 839, DateTimeKind.Local).AddTicks(1082),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -578,22 +447,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "66a805db-f7f6-4948-8558-1c2abdd7cf2c",
+                            Id = "a6dc25d5-fab9-4c1c-8391-5b2d5c61a2cc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1dfbb251-d112-431b-839a-ceb1d96bcd1f",
+                            ConcurrencyStamp = "63e32d04-8f9a-492c-99ba-b6fb323a5434",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user4@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 4",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 4",
                             NormalizedEmail = "USER4@EXAMPLE.COM",
                             NormalizedUserName = "USER4",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKm/VvDEvmv+9z+xd7rXD14Zk80eT6I2A5RKDEj0kYaOqSO0ANQBM2eFKLwtEb1Vcg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHhQAsBkINdK2Xn4DX9FG5N/jvyy3DD/74qCTBMwKDjNyHEEGSMrpHLoYfU5DZwVKA==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 13, 155, DateTimeKind.Local).AddTicks(8816),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 7, 930, DateTimeKind.Local).AddTicks(987),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -603,22 +472,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "a58404da-ceff-4fd2-9ec4-d749a0e136f7",
+                            Id = "6181b44d-1521-439b-88f3-b38a60de7738",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef854e53-8ff9-4cfd-985e-33a2515a0516",
+                            ConcurrencyStamp = "0334e63c-b3a2-4b3a-98ca-e61daec17f08",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user5@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 5",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 5",
                             NormalizedEmail = "USER5@EXAMPLE.COM",
                             NormalizedUserName = "USER5",
-                            PasswordHash = "AQAAAAIAAYagAAAAEH9SO2QLksXnBdBMbw27exCszdFBQ2kw5ZWV9adN5gauMs63BznVF05wnZvbz2QpSg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHqlq2M+CMN7H0DfNuTDFhQXuhAWraGOESz9+k3gcBz6FToqY5oT7wh8he3VUh12Pg==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 13, 243, DateTimeKind.Local).AddTicks(7985),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 7, 990, DateTimeKind.Local).AddTicks(6008),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -628,22 +497,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "f95747e3-80c2-4261-a1dc-e3e0dd773d57",
+                            Id = "35e2e315-bf33-42c7-9c8d-1799232c7732",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4af890f6-c2cc-45b7-aa00-6f9930d74a1a",
+                            ConcurrencyStamp = "204bd24b-fab7-4d4e-a4dd-0622e2a6b149",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user6@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 6",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 6",
                             NormalizedEmail = "USER6@EXAMPLE.COM",
                             NormalizedUserName = "USER6",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGKQZJ2Ytpk0xvn2Fu9GXkSeeBmv+ROtrSdN32NbNbndisFM5L9uCDb9GdXluu+NEg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF/VDll1Hu7bgSOED2TMQITXG8R20uRDTTuOZu0G7fxMwxDrzx9XXjh3DruxzVJtcA==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 13, 327, DateTimeKind.Local).AddTicks(9966),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 8, 53, DateTimeKind.Local).AddTicks(2176),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -653,22 +522,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "2f4106df-6cee-42f9-a22e-8d65d994b824",
+                            Id = "b60d1814-691e-4e29-bb62-38e5dee79076",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7a77f1bd-86f2-4e4b-91c0-9085ee0dbe62",
+                            ConcurrencyStamp = "2b45b1a0-3e00-4be8-a075-a60ba53717db",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user7@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 7",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 7",
                             NormalizedEmail = "USER7@EXAMPLE.COM",
                             NormalizedUserName = "USER7",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOfGFacpw09n3+28EABxZ9b0TOE9IRvRnXZVt/psUElfH95ynPoav7Eb7E6lEcK5/A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFEbm2FY1QCJtSZKDvW3vjX4hFNePNwXf2BWmVNYDp9GB799KFJckPR4JC2aLr848w==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 13, 414, DateTimeKind.Local).AddTicks(3275),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 8, 125, DateTimeKind.Local).AddTicks(6954),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -678,22 +547,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "3f38348a-bf9d-4ed5-97af-a09cc965ca2e",
+                            Id = "7771539c-6f47-4041-acb8-d82b7af6de5c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5201e473-d91d-4313-b640-1cf9389c66a5",
+                            ConcurrencyStamp = "240a0779-b878-4462-b7b6-e7268ed5d0b8",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user8@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 8",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 8",
                             NormalizedEmail = "USER8@EXAMPLE.COM",
                             NormalizedUserName = "USER8",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKDiHGE3J5JYdihUp8zZFlAbxnsITjHNfO/7l4muZp4/JNd6t2lVeOULhgWtEwwD/Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA5b3u4VijE25t1RBin/QtCTcMiT+poF6IPr8XZXjEtIMCWbSPPKIuOTUwW+wkSqVw==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 13, 494, DateTimeKind.Local).AddTicks(3780),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 8, 202, DateTimeKind.Local).AddTicks(9199),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -703,22 +572,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "10c0fcd0-efa0-453f-bdfd-9dc231bdea0d",
+                            Id = "3b3b7737-5864-4b5d-be9f-d41b3406f805",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a6de829b-e778-428e-aa6e-335e4cf49779",
+                            ConcurrencyStamp = "da6a6420-1f26-43e7-936f-e615ec778e7e",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user9@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 9",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 9",
                             NormalizedEmail = "USER9@EXAMPLE.COM",
                             NormalizedUserName = "USER9",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKCSHLRmtmCeoGuGnXC0U8YZ+ls/sWNhrgTVgpmyCg4f1MVQxWKinOoQz4QPY7UmIA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECg0N/zyMK7fNHhkQJMpX0COzVkQflManlOYa1QS4S72W4RFGdfIshdsM3l3PzP6OA==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 13, 565, DateTimeKind.Local).AddTicks(2603),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 8, 263, DateTimeKind.Local).AddTicks(6186),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -728,22 +597,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "b7deb289-28b8-4cb6-8f0d-c1845aff8421",
+                            Id = "dc8d159a-5554-4420-bc6d-e8d6f7ece9c4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "860284d2-f029-4e0a-bf3c-a82b0c3fd67c",
+                            ConcurrencyStamp = "4768f249-db4e-4f83-b033-76c7524f11b7",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user10@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 10",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 10",
                             NormalizedEmail = "USER10@EXAMPLE.COM",
                             NormalizedUserName = "USER10",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMQje7LpS6942OVlz6a2eYklFn4sxqMmi3d0a9m1/00eY5BDEzqFQriEUANDFUlogg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGFvptJyUlykaUPkDQRdWKsDKHadumJ5whTuxymTn6hlEFH9GaYaGMSpubKtWI2e3g==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 13, 631, DateTimeKind.Local).AddTicks(4211),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 8, 325, DateTimeKind.Local).AddTicks(605),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -753,22 +622,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "d6d527ad-d610-40d6-9f8b-0da55ba1d2e2",
+                            Id = "818eb11a-079d-4415-810a-571ff6bc8bab",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c72de184-130a-4175-8ac8-9545d79bbf5b",
+                            ConcurrencyStamp = "39e8e108-db51-4898-a5b1-5b7500898bf0",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user11@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 11",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 11",
                             NormalizedEmail = "USER11@EXAMPLE.COM",
                             NormalizedUserName = "USER11",
-                            PasswordHash = "AQAAAAIAAYagAAAAENZuGBm17KGCkACKUs63bCQgsye2oSJ+SYKrR2Zl0eJLLGTSucHIJSlibXxupdPipA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBkX8Ap/xevSed81Lh5iWOrkBCaFo+ys6uM8ZIxrs14vQdaM2ZZ3RFM4Vg8BKXb7ww==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 13, 714, DateTimeKind.Local).AddTicks(4790),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 8, 383, DateTimeKind.Local).AddTicks(539),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -778,22 +647,22 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            Id = "d008bf53-5d61-41de-96e9-877b48d74beb",
+                            Id = "d1b349a8-ae25-4920-8190-80c4608b2dd1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3a287d6c-f269-4cf7-a46f-35549a406474",
+                            ConcurrencyStamp = "b73f75c7-de86-4b13-8042-f4a36889eb67",
                             DataNascimento = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user12@example.com",
                             EmailConfirmed = true,
                             EnderecoCompleto = "Endereço 12",
-                            FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                            FotoPerfil = new byte[] { 104, 116, 116, 112, 115, 58, 47, 47, 115, 116, 97, 116, 105, 99, 46, 118, 101, 99, 116, 101, 101, 122, 121, 46, 99, 111, 109, 47, 115, 121, 115, 116, 101, 109, 47, 114, 101, 115, 111, 117, 114, 99, 101, 115, 47, 112, 114, 101, 118, 105, 101, 119, 115, 47, 48, 48, 57, 47, 51, 57, 55, 47, 56, 51, 53, 47, 110, 111, 110, 95, 50, 120, 47, 109, 97, 110, 45, 97, 118, 97, 116, 97, 114, 45, 99, 108, 105, 112, 97, 114, 116, 45, 105, 108, 108, 117, 115, 116, 114, 97, 116, 105, 111, 110, 45, 102, 114, 101, 101, 45, 112, 110, 103, 46, 112, 110, 103 },
                             LockoutEnabled = false,
                             Nome = "User 12",
                             NormalizedEmail = "USER12@EXAMPLE.COM",
                             NormalizedUserName = "USER12",
-                            PasswordHash = "AQAAAAIAAYagAAAAENJiCEOSWBxrlUdkyha7Rw1x9kORPOcDdqPqK+nW+XQXia0oWs2zt4i+rFxP79mrSQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK0JmnRfiS2LvVwiSoM4ceeIAw8oazwDtKQVvwLFEs6UGCSQ3uGlp+EVSbgUtMZcFw==",
                             PhoneNumberConfirmed = false,
                             RefreshToken = "",
-                            RegisteredAt = new DateTime(2024, 5, 15, 13, 1, 13, 799, DateTimeKind.Local).AddTicks(5555),
+                            RegisteredAt = new DateTime(2024, 5, 14, 15, 39, 8, 442, DateTimeKind.Local).AddTicks(770),
                             SecurityStamp = "",
                             TokenCreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TokenExpiredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -868,7 +737,7 @@ namespace NeurometaOncoAPI.Migrations
                     b.HasData(
                         new
                         {
-                            PacienteId = "2f4106df-6cee-42f9-a22e-8d65d994b824",
+                            PacienteId = "b60d1814-691e-4e29-bb62-38e5dee79076",
                             Cid = "CID-7",
                             ComprovanteResidencia = new byte[] { 67, 111, 109, 112, 114, 111, 118, 97, 110, 116, 101, 32, 82, 101, 115, 105, 100, 101, 110, 99, 105, 97, 32, 55 },
                             CrmMedico = 7,
@@ -881,7 +750,7 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            PacienteId = "3f38348a-bf9d-4ed5-97af-a09cc965ca2e",
+                            PacienteId = "7771539c-6f47-4041-acb8-d82b7af6de5c",
                             Cid = "CID-8",
                             ComprovanteResidencia = new byte[] { 67, 111, 109, 112, 114, 111, 118, 97, 110, 116, 101, 32, 82, 101, 115, 105, 100, 101, 110, 99, 105, 97, 32, 56 },
                             CrmMedico = 8,
@@ -894,7 +763,7 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            PacienteId = "10c0fcd0-efa0-453f-bdfd-9dc231bdea0d",
+                            PacienteId = "3b3b7737-5864-4b5d-be9f-d41b3406f805",
                             Cid = "CID-9",
                             ComprovanteResidencia = new byte[] { 67, 111, 109, 112, 114, 111, 118, 97, 110, 116, 101, 32, 82, 101, 115, 105, 100, 101, 110, 99, 105, 97, 32, 57 },
                             CrmMedico = 9,
@@ -907,7 +776,7 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            PacienteId = "b7deb289-28b8-4cb6-8f0d-c1845aff8421",
+                            PacienteId = "dc8d159a-5554-4420-bc6d-e8d6f7ece9c4",
                             Cid = "CID-10",
                             ComprovanteResidencia = new byte[] { 67, 111, 109, 112, 114, 111, 118, 97, 110, 116, 101, 32, 82, 101, 115, 105, 100, 101, 110, 99, 105, 97, 32, 49, 48 },
                             CrmMedico = 10,
@@ -920,7 +789,7 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            PacienteId = "d6d527ad-d610-40d6-9f8b-0da55ba1d2e2",
+                            PacienteId = "818eb11a-079d-4415-810a-571ff6bc8bab",
                             Cid = "CID-11",
                             ComprovanteResidencia = new byte[] { 67, 111, 109, 112, 114, 111, 118, 97, 110, 116, 101, 32, 82, 101, 115, 105, 100, 101, 110, 99, 105, 97, 32, 49, 49 },
                             CrmMedico = 11,
@@ -933,7 +802,7 @@ namespace NeurometaOncoAPI.Migrations
                         },
                         new
                         {
-                            PacienteId = "d008bf53-5d61-41de-96e9-877b48d74beb",
+                            PacienteId = "d1b349a8-ae25-4920-8190-80c4608b2dd1",
                             Cid = "CID-12",
                             ComprovanteResidencia = new byte[] { 67, 111, 109, 112, 114, 111, 118, 97, 110, 116, 101, 32, 82, 101, 115, 105, 100, 101, 110, 99, 105, 97, 32, 49, 50 },
                             CrmMedico = 12,
@@ -964,10 +833,6 @@ namespace NeurometaOncoAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Especialidade")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("PsicologoId");
 
                     b.ToTable("Psicologos");
@@ -975,51 +840,45 @@ namespace NeurometaOncoAPI.Migrations
                     b.HasData(
                         new
                         {
-                            PsicologoId = "46cc5a6f-e612-42ca-a969-bb6ca507ec71",
+                            PsicologoId = "59455323-cec2-4ca4-b885-8e290e6507f0",
                             CarteiraCrp = new byte[] { 67, 97, 114, 116, 101, 105, 114, 97, 32, 67, 82, 80, 32, 49 },
                             Crp = "CRP-1",
-                            Descricao = "Psicologo 1",
-                            Especialidade = "Terceira Especialidade"
+                            Descricao = "Psicologo 1"
                         },
                         new
                         {
-                            PsicologoId = "767351ac-1687-46d0-b7fe-9e64f801c009",
+                            PsicologoId = "8fb2a5af-2667-48f5-bc1f-1418d9a3424f",
                             CarteiraCrp = new byte[] { 67, 97, 114, 116, 101, 105, 114, 97, 32, 67, 82, 80, 32, 50 },
                             Crp = "CRP-2",
-                            Descricao = "Psicologo 2",
-                            Especialidade = "Terceira Especialidade"
+                            Descricao = "Psicologo 2"
                         },
                         new
                         {
-                            PsicologoId = "d26a8f97-bfc2-4cdc-b3c0-b9fa998ad5f9",
+                            PsicologoId = "c2a276ae-f9af-468d-a593-f60a7c2be4be",
                             CarteiraCrp = new byte[] { 67, 97, 114, 116, 101, 105, 114, 97, 32, 67, 82, 80, 32, 51 },
                             Crp = "CRP-3",
-                            Descricao = "Psicologo 3",
-                            Especialidade = "Terceira Especialidade"
+                            Descricao = "Psicologo 3"
                         },
                         new
                         {
-                            PsicologoId = "66a805db-f7f6-4948-8558-1c2abdd7cf2c",
+                            PsicologoId = "a6dc25d5-fab9-4c1c-8391-5b2d5c61a2cc",
                             CarteiraCrp = new byte[] { 67, 97, 114, 116, 101, 105, 114, 97, 32, 67, 82, 80, 32, 52 },
                             Crp = "CRP-4",
-                            Descricao = "Psicologo 4",
-                            Especialidade = "Terapia Cognitivo Comportamental"
+                            Descricao = "Psicologo 4"
                         },
                         new
                         {
-                            PsicologoId = "a58404da-ceff-4fd2-9ec4-d749a0e136f7",
+                            PsicologoId = "6181b44d-1521-439b-88f3-b38a60de7738",
                             CarteiraCrp = new byte[] { 67, 97, 114, 116, 101, 105, 114, 97, 32, 67, 82, 80, 32, 53 },
                             Crp = "CRP-5",
-                            Descricao = "Psicologo 5",
-                            Especialidade = "Psicanálise"
+                            Descricao = "Psicologo 5"
                         },
                         new
                         {
-                            PsicologoId = "f95747e3-80c2-4261-a1dc-e3e0dd773d57",
+                            PsicologoId = "35e2e315-bf33-42c7-9c8d-1799232c7732",
                             CarteiraCrp = new byte[] { 67, 97, 114, 116, 101, 105, 114, 97, 32, 67, 82, 80, 32, 54 },
                             Crp = "CRP-6",
-                            Descricao = "Psicologo 6",
-                            Especialidade = "Psicanálise"
+                            Descricao = "Psicologo 6"
                         });
                 });
 

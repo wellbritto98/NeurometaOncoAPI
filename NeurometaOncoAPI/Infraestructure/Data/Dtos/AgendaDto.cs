@@ -1,4 +1,5 @@
-﻿using NeurometaOncoAPI.Domain.DomainModels.Models.Auth;
+﻿using NeurometaOncoAPI.Domain.DomainModels.Models;
+using NeurometaOncoAPI.Domain.DomainModels.Models.Auth;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,6 +18,8 @@ public class AgendaDto : BaseDto
     public DateTime? DataFim { get; set; }
     public int? Nota { get; set; }
     public string? Comentario { get; set; }
+    public virtual PacienteDto Paciente { get; set; }
+    public virtual PsicologoDto Psicologo { get; set; }
 
 
 

@@ -12,6 +12,7 @@ public class Paciente : BaseEntity.BaseEntity
     [Key, Column(Order = 0)]
     [ForeignKey("User")]
     public string PacienteId {  get; set; }
+    //Retornar esse cara no get,
     public virtual User User { get; set; }
     
     public byte[] FotoRgFrente { get; set; }

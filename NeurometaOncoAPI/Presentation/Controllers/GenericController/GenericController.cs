@@ -15,7 +15,7 @@ namespace NeurometaOncoAPI.Presentation.Controllers.GenericController;
 [Authorize]
 public class GenericController<T1, T2> : ControllerBase where T1 : BaseEntity where T2 : class
 {
-    private readonly IGenericRepository<T1> _repository;
+    protected readonly IGenericRepository<T1> _repository;
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
 

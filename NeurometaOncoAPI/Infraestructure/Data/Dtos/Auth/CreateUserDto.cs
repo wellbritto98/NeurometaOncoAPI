@@ -28,6 +28,8 @@ namespace NeurometaOncoAPI.Infraestructure.Data.Dtos.Auth
 
         [Required]
         public string Role { get; set; } = "Paciente";
+        
+        public string? FotoPerfil { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
