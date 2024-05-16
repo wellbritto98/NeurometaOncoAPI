@@ -46,6 +46,28 @@ public class GenericController<T1, T2> : ControllerBase where T1 : BaseEntity wh
         }
     }
 
+    [HttpGet("Find")]
+    [Authorize]
+    [SwaggerOperation(
+        Summary = "Retorna uma lista de items filtrados pelos campos desejados e operadores informados",
+        Description = "Espera um JSON com os filtros. Exemplo: {\"field@operator\":\"value@type\", \"field2@operator2\":\"value2@type2\",...}" +
+        "Caso deseje buscar por PsicologoId, PacienteId, ou UserId, o tipo desses campos é System.String" +
+        "Campos do tipo DateTime, a API entede por System.DateTime"
+        )]
+    public async Task<ActionResult<IEnumerable<T2>>> Find([FromQuery] string json)
+    {
+        try
+        {
+            var entities = await _repository.FindAsync(json);
+            return Ok(_mapper.Map<IEnumerable<T2>>(entities));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
     [HttpGet("Get/{id}")]
     [Authorize]
     [SwaggerOperation(

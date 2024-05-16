@@ -2,6 +2,7 @@
 using NeurometaOncoAPI.Domain.DomainModels.Models.BaseEntity;
 using NeurometaOncoAPI.Infraestructure.Data;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SendGrid.Helpers.Mail;
 
 using System;
@@ -10,6 +11,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace NeurometaOncoAPI.Infraestructure.Repositorys.GenericRepository;
 
@@ -22,40 +24,69 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         _context = context;
     }
 
-
-
-
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public async Task<IEnumerable<T>> FindAsync(string json)
     {
-        var entityType = _context.Model.FindEntityType(typeof(T));
-        var entityProperties = typeof(T).GetProperties();
-
-        var virtualProperties = entityProperties
-            .Where(p => p.GetMethod.IsVirtual && p.PropertyType.IsClass)
-            .ToList();
-
-        // Remove ICollection properties
-        virtualProperties.RemoveAll(p => p.PropertyType.GetInterfaces()
-            .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>)));
-
-        if (virtualProperties.Count == 0)
+        try
         {
-            // Se não restar nenhum atributo virtual após a remoção,
-            // fazer apenas o ToListAsync
-            return await _context.Set<T>().ToListAsync();
-        }
-        else
-        {
-            // Para cada atributo virtual que seja uma classe,
-            // adicionar includes para carregar os dados relacionados
+            // Deserializar o JSON para um objeto Dictionary
+            var filters = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+            // Iniciar a consulta
             var query = _context.Set<T>().AsQueryable();
+
+            // Obter as propriedades virtuais da entidade
+            var virtualProperties = GetVirtualFields(typeof(T));
+
+            // Iterar sobre o dicionário e construir a consulta
+            foreach (var filter in filters)
+            {
+                // Dividir a chave em campo e operador
+                var parts = filter.Key.Split('@');
+                var field = parts[0];
+                var operador = parts[1];
+
+                // Converter o valor para o tipo correto
+                var value = Convert.ChangeType(filter.Value.Split('@')[0], Type.GetType(filter.Value.Split('@')[1]));
+
+                // Construir a consulta com base no operador
+                switch (operador)
+                {
+                    case "equal":
+                        query = query.Where(e => EF.Property<object>(e, field).Equals(value));
+                        break;
+                    case "diferente":
+                        query = query.Where(e => !EF.Property<object>(e, field).Equals(value));
+                        break;
+                    case "maior":
+                        query = query.Where(e => EF.Property<IComparable>(e, field).CompareTo(value) > 0);
+                        break;
+                    case "menor":
+                        query = query.Where(e => EF.Property<IComparable>(e, field).CompareTo(value) < 0);
+                        break;
+                    case "maiorigual":
+                        query = query.Where(e => EF.Property<IComparable>(e, field).CompareTo(value) >= 0);
+                        break;
+                    case "menorigual":
+                        query = query.Where(e => EF.Property<IComparable>(e, field).CompareTo(value) <= 0);
+                        break;
+                }
+            }
+
+            // Adicionar includes para propriedades virtuais
             foreach (var property in virtualProperties)
             {
                 query = IncludeNestedProperties(query, property);
             }
+
+            // Executar a consulta e retornar o resultado
             return await query.ToListAsync();
         }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
+
 
     private IQueryable<T> IncludeNestedProperties<T>(IQueryable<T> query, PropertyInfo property, string currentPath = null) where T : class
     {
@@ -84,24 +115,59 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     }
 
 
+    private List<PropertyInfo> GetVirtualFields(Type entityType)
+    {
+        var entityProperties = entityType.GetProperties();
 
+        var virtualProperties = entityProperties
+            .Where(p => p.GetMethod.IsVirtual && p.PropertyType.IsClass)
+            .ToList();
+
+        // Remove ICollection properties
+        virtualProperties.RemoveAll(p => p.PropertyType.GetInterfaces()
+            .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>)));
+
+        return virtualProperties;
+    }
+
+    public async Task<IEnumerable<T>> GetAllAsync()
+    {
+        try
+        {
+            var entityType = _context.Model.FindEntityType(typeof(T));
+            var virtualProperties = GetVirtualFields(typeof(T));
+
+            if (virtualProperties.Count == 0)
+            {
+                // fazer apenas o ToListAsync
+                return await _context.Set<T>().ToListAsync();
+            }
+            else
+            {
+                // Para cada atributo virtual que seja uma classe,
+                // adicionar includes para carregar os dados relacionados
+                var query = _context.Set<T>().AsQueryable();
+                foreach (var property in virtualProperties)
+                {
+                    query = IncludeNestedProperties(query, property);
+                }
+                return await query.ToListAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
 
     public async Task<T> GetByIdAsync(params object[] keyValues)
     {
         try
         {
             var entityType = _context.Model.FindEntityType(typeof(T));
-            var entityProperties = typeof(T).GetProperties();
-
-            var virtualProperties = entityProperties
-                .Where(p => p.GetMethod.IsVirtual && p.PropertyType.IsClass)
-                .ToList();
-
-          
-            virtualProperties.RemoveAll(p => p.PropertyType.GetInterfaces()
-                .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>)));
-
             var keyProperties = entityType.FindPrimaryKey().Properties;
+            var virtualProperties = GetVirtualFields(typeof(T));
+
             var query = _context.Set<T>().AsQueryable();
 
             if (virtualProperties.Count > 0)
@@ -128,7 +194,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
             throw new Exception(ex.Message);
         }
     }
-
 
 
 
