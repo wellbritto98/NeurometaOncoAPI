@@ -59,7 +59,12 @@ public class DataContext : IdentityDbContext<User>
                 DataNascimento = new DateTime(1980, 1, 1),
                 EnderecoCompleto = $"Endereço {i}",
                 role = i <= 6 ? "Psicologo" : "Paciente",
-                FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png"
+                FotoPerfil = "https://static.vecteezy.com/system/resources/previews/009/397/835/non_2x/man-avatar-clipart-illustration-free-png.png",
+                Telefone = $"(79) 9{random.Next(10000000, 99999999)}",
+                Cpf = $"{random.Next(100000000, 999999999)}",
+                Rg = $"{random.Next(1000000, 9999999)}",
+
+
             };
 
             modelBuilder.Entity<User>().HasData(user);

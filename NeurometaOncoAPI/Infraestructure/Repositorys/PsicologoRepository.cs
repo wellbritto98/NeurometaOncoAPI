@@ -19,31 +19,5 @@ public class PsicologoRepository : GenericRepository<Psicologo>, IPsicologoRepos
         _mapper = mapper;
     }
 
-    public async Task<ApiResponse> GetPsicologoUser(string id)
-    {
-        try
-        {
-            var psicologo = await _context.Psicologos.Include(x => x.User).FirstOrDefaultAsync(x => x.PsicologoId == id);
-            var psicologoDto = _mapper.Map<PsicologoUserDto>(psicologo);
-            return new ApiResponse { Data = psicologoDto, Message = "Psicologo encontrado com sucesso", Success = true };
-        }
-        catch (Exception ex)
-        {
-            return new ApiResponse { Data = null, Message = ex.Message, Success = false };
-        }
-    }
-
-    public async Task<ApiResponse> GetAllPsicologoUser()
-    {
-        try
-        {
-            var psicologos = await _context.Psicologos.Include(x => x.User).ToListAsync();
-            var psicologosDto = _mapper.Map<List<PsicologoUserDto>>(psicologos);
-            return new ApiResponse { Data = psicologosDto, Message = "Psicologos encontrados com sucesso", Success = true };
-        }
-        catch (Exception ex)
-        {
-            return new ApiResponse { Data = null, Message = ex.Message, Success = false };
-        }
-    }
+  
 }

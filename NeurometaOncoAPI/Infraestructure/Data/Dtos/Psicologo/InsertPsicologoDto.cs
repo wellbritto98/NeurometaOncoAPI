@@ -3,9 +3,9 @@ using NeurometaOncoAPI.Infraestructure.Data.Dtos.Auth;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NeurometaOncoAPI.Infraestructure.Data.Dtos;
+namespace NeurometaOncoAPI.Infraestructure.Data.Dtos.Psicologo;
 
-public class PsicologoDto : BaseDto
+public class InsertPsicologoDto : BaseDto
 {
 
     [Required]
@@ -15,10 +15,10 @@ public class PsicologoDto : BaseDto
     [Required]
     public string Descricao { get; set; }
     [Required]
-    public string Especialidade{ get; set; }
+    public string Especialidade { get; set; }
     [Required]
     public byte[] CarteiraCrp { get; set; }
-    public virtual GetUserDto User { get; set; }
+
 
 
 

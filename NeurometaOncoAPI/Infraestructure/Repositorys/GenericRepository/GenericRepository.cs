@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace NeurometaOncoAPI.Infraestructure.Repositorys.GenericRepository;
-
 public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
     private readonly DataContext _context;
@@ -24,70 +23,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         _context = context;
     }
 
-    public async Task<IEnumerable<T>> FindAsync(string json)
-    {
-        try
-        {
-            // Deserializar o JSON para um objeto Dictionary
-            var filters = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-
-            // Iniciar a consulta
-            var query = _context.Set<T>().AsQueryable();
-
-            // Obter as propriedades virtuais da entidade
-            var virtualProperties = GetVirtualFields(typeof(T));
-
-            // Iterar sobre o dicionário e construir a consulta
-            foreach (var filter in filters)
-            {
-                // Dividir a chave em campo e operador
-                var parts = filter.Key.Split('@');
-                var field = parts[0];
-                var operador = parts[1];
-
-                // Converter o valor para o tipo correto
-                var value = Convert.ChangeType(filter.Value.Split('@')[0], Type.GetType(filter.Value.Split('@')[1]));
-
-                // Construir a consulta com base no operador
-                switch (operador)
-                {
-                    case "equal":
-                        query = query.Where(e => EF.Property<object>(e, field).Equals(value));
-                        break;
-                    case "diferente":
-                        query = query.Where(e => !EF.Property<object>(e, field).Equals(value));
-                        break;
-                    case "maior":
-                        query = query.Where(e => EF.Property<IComparable>(e, field).CompareTo(value) > 0);
-                        break;
-                    case "menor":
-                        query = query.Where(e => EF.Property<IComparable>(e, field).CompareTo(value) < 0);
-                        break;
-                    case "maiorigual":
-                        query = query.Where(e => EF.Property<IComparable>(e, field).CompareTo(value) >= 0);
-                        break;
-                    case "menorigual":
-                        query = query.Where(e => EF.Property<IComparable>(e, field).CompareTo(value) <= 0);
-                        break;
-                }
-            }
-
-            // Adicionar includes para propriedades virtuais
-            foreach (var property in virtualProperties)
-            {
-                query = IncludeNestedProperties(query, property);
-            }
-
-            // Executar a consulta e retornar o resultado
-            return await query.ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
-    }
-
-
+    //Funções Auxiliares
+    //Possibilita Joins dinamicos no banco de dados
     private IQueryable<T> IncludeNestedProperties<T>(IQueryable<T> query, PropertyInfo property, string currentPath = null) where T : class
     {
         // Verificar se a propriedade é virtual, se é uma classe e não é uma string
@@ -113,8 +50,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 
         return query;
     }
-
-
     private List<PropertyInfo> GetVirtualFields(Type entityType)
     {
         var entityProperties = entityType.GetProperties();
@@ -130,6 +65,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return virtualProperties;
     }
 
+
+    //Métodos CRUD utilizados para todas as entidades
+    //Get All
     public async Task<IEnumerable<T>> GetAllAsync()
     {
         try
@@ -160,6 +98,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         }
     }
 
+    //Get By Id (Retorna apenas 1, a entidade pode ter chave composta, não precisa ter apenas 1 numero de ID)
     public async Task<T> GetByIdAsync(params object[] keyValues)
     {
         try
@@ -195,9 +134,133 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         }
     }
 
+    // Find retorna uma lista de entidades que atendem a um critério de pesquisa
+    // basicamente um filtro, que permite construção do Select no banco de dados de forma dinamica
+    public async Task<IEnumerable<T>> FindAsync(string json)
+    {
+        try
+        {
+            // Deserializar o JSON para um objeto Dictionary
+            var filters = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+            // Iniciar a consulta
+            var query = _context.Set<T>().AsQueryable();
+
+            // Obter as propriedades virtuais da entidade
+            var virtualProperties = GetVirtualFields(typeof(T));
+
+            // Iterar sobre o dicionário e construir a consulta
+            foreach (var filter in filters)
+            {
+                // Dividir a chave em campo e operador
+                var parts = filter.Key.Split('@');
+                var field = parts[0];
+                var operador = parts[1];
+
+                // Converter o valor para o tipo correto
+                var valueParts = filter.Value.Split('@');
+                var valueStr = valueParts[0];
+                var valueTypeStr = valueParts[1];
+                var valueType = Type.GetType(valueTypeStr);
+                object value;
+
+                // Converter o valor para o tipo apropriado
+                if (valueType == typeof(DateTime))
+                {
+                    value = DateTime.Parse(valueStr, null, System.Globalization.DateTimeStyles.RoundtripKind);
+                }
+                else
+                {
+                    value = Convert.ChangeType(valueStr, valueType);
+                }
+
+                // Construir a consulta com base no operador e no tipo do valor
+                switch (operador)
+                {
+                    case "igual":
+                        query = query.Where(e => EF.Property<object>(e, field).Equals(value));
+                        break;
+                    case "diferente":
+                        query = query.Where(e => !EF.Property<object>(e, field).Equals(value));
+                        break;
+                    case "maior":
+                        if (valueType == typeof(DateTime))
+                        {
+                            query = query.Where(e => EF.Property<DateTime>(e, field) > (DateTime)value);
+                        }
+                        else if (typeof(IComparable).IsAssignableFrom(valueType))
+                        {
+                            query = query.Where(e => ((IComparable)EF.Property<object>(e, field)).CompareTo(value) > 0);
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Tipo de dado não suportado para o operador 'maior': {valueType}");
+                        }
+                        break;
+                    case "menor":
+                        if (valueType == typeof(DateTime))
+                        {
+                            query = query.Where(e => EF.Property<DateTime>(e, field) < (DateTime)value);
+                        }
+                        else if (typeof(IComparable).IsAssignableFrom(valueType))
+                        {
+                            query = query.Where(e => ((IComparable)EF.Property<object>(e, field)).CompareTo(value) < 0);
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Tipo de dado não suportado para o operador 'menor': {valueType}");
+                        }
+                        break;
+                    case "maiorigual":
+                        if (valueType == typeof(DateTime))
+                        {
+                            query = query.Where(e => EF.Property<DateTime>(e, field) >= (DateTime)value);
+                        }
+                        else if (typeof(IComparable).IsAssignableFrom(valueType))
+                        {
+                            query = query.Where(e => ((IComparable)EF.Property<object>(e, field)).CompareTo(value) >= 0);
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Tipo de dado não suportado para o operador 'maiorigual': {valueType}");
+                        }
+                        break;
+                    case "menorigual":
+                        if (valueType == typeof(DateTime))
+                        {
+                            query = query.Where(e => EF.Property<DateTime>(e, field) <= (DateTime)value);
+                        }
+                        else if (typeof(IComparable).IsAssignableFrom(valueType))
+                        {
+                            query = query.Where(e => ((IComparable)EF.Property<object>(e, field)).CompareTo(value) <= 0);
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Tipo de dado não suportado para o operador 'menorigual': {valueType}");
+                        }
+                        break;
+                    default:
+                        throw new ArgumentException($"Operador '{operador}' não é suportado.");
+                }
+            }
+
+            // Adicionar includes para propriedades virtuais
+            foreach (var property in virtualProperties)
+            {
+                query = IncludeNestedProperties(query, property);
+            }
+
+            // Executar a consulta e retornar o resultado
+            return await query.ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
 
 
-
+    // Adiciona um registro no banco
     public virtual async Task<T> AddAsync(T entity)
     {
         _context.Set<T>().Add(entity);
@@ -205,13 +268,14 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return entity;
     }
 
-    public async Task<int> UpdateAsync(T entity)
+    //Atualiza um registro no banco
+    public async Task<T> UpdateAsync(T entity)
     {
         try
         {
             _context.Entry(entity).State = EntityState.Modified;
-            var updatedEntity = await _context.SaveChangesAsync();
-            return updatedEntity;
+            await _context.SaveChangesAsync();
+            return entity;
         }
         catch (Exception ex)
         {
@@ -220,6 +284,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 
     }
 
+
+    //Deleta um registro no banco
     public async Task DeleteAsync(params object[] keyValues)
     {
         var entity = await _context.Set<T>().FindAsync(keyValues);

@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NeurometaOncoAPI.Domain.Services.Auth;
+using NeurometaOncoAPI.Infraestructure.Data.Dtos;
 using NeurometaOncoAPI.Infraestructure.Data.Dtos.Auth;
+using NeurometaOncoAPI.Infraestructure.Data.Dtos.Paciente;
+using NeurometaOncoAPI.Infraestructure.Data.Dtos.Psicologo;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace NeurometaOncoAPI.Presentation.Controllers.Identity;
@@ -18,17 +22,23 @@ public class UserController : ControllerBase
     [HttpPost("RegisterUser")]
     [SwaggerOperation(
                Summary = "Cria um novo usuário",
-               Description = "Cria um novo usuário no sistema"
+               Description = "Se estiver criando um PACIENTE, deixe o campo do Json psicologo{} VAZIO, o mesmo vale para psicologo, deixe o campo paciente{} VAZIO."
            )]
 
-    public async Task<IActionResult> Register([FromBody] RegisterUserDto registerUserDto)
+    public async Task<IActionResult> Register([FromBody] RegisterUserCombinedDto registerUserCombinedDto)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var result = await _userService.RegisterUser(registerUserDto);
+        var pacienteOrPsicologoJson = registerUserCombinedDto.Paciente != null
+            ? JsonConvert.SerializeObject(registerUserCombinedDto.Paciente)
+            : registerUserCombinedDto.Psicologo != null
+                ? JsonConvert.SerializeObject(registerUserCombinedDto.Psicologo)
+                : null;
+
+        var result = await _userService.RegisterUser(registerUserCombinedDto.RegisterUser, pacienteOrPsicologoJson);
         if (result.Success)
         {
             return Ok(result);

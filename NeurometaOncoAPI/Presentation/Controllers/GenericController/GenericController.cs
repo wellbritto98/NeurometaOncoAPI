@@ -13,7 +13,8 @@ namespace NeurometaOncoAPI.Presentation.Controllers.GenericController;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class GenericController<T1, T2> : ControllerBase where T1 : BaseEntity where T2 : class
+//T1 = Entity, T2= InsertDTO, T3 = ReadDTO, T4 = UpdateDTO
+public class GenericController<T1, T2, T3, T4> : ControllerBase where T1 : BaseEntity where T2 : class where T3 : class where T4 : class
 {
     protected readonly IGenericRepository<T1> _repository;
     private readonly IMapper _mapper;
@@ -32,12 +33,12 @@ public class GenericController<T1, T2> : ControllerBase where T1 : BaseEntity wh
     [SwaggerOperation(
     Summary = "Retorna uma lista de items"
     )]
-    public async Task<ActionResult<IEnumerable<T2>>> GetAll()
+    public async Task<ActionResult<IEnumerable<T3>>> GetAll()
     {
         try
         {
             var entities = await _repository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<T2>>(entities));
+            return Ok(_mapper.Map<IEnumerable<T3>>(entities));
         }
 
         catch (Exception ex)
@@ -54,12 +55,12 @@ public class GenericController<T1, T2> : ControllerBase where T1 : BaseEntity wh
         "Caso deseje buscar por PsicologoId, PacienteId, ou UserId, o tipo desses campos é System.String" +
         "Campos do tipo DateTime, a API entede por System.DateTime"
         )]
-    public async Task<ActionResult<IEnumerable<T2>>> Find([FromQuery] string json)
+    public async Task<ActionResult<IEnumerable<T3>>> Find([FromQuery] string json)
     {
         try
         {
             var entities = await _repository.FindAsync(json);
-            return Ok(_mapper.Map<IEnumerable<T2>>(entities));
+            return Ok(_mapper.Map<IEnumerable<T3>>(entities));
         }
         catch (Exception ex)
         {
@@ -67,14 +68,13 @@ public class GenericController<T1, T2> : ControllerBase where T1 : BaseEntity wh
         }
     }
 
-
     [HttpGet("Get/{id}")]
     [Authorize]
     [SwaggerOperation(
     Summary = "Retorna um item pelo ID",
     Description = "Espera um ID no formato JSON com as chaves primárias. Exemplo: {\"key1\":\"value\", \"key2\":value2,...}, as chaves devem estar na mesma ordem do banco de dados"
     )]
-    public async Task<ActionResult<T2>> Get(string id)
+    public async Task<ActionResult<T3>> Get(string id)
     {
         try
         {
@@ -111,15 +111,13 @@ public class GenericController<T1, T2> : ControllerBase where T1 : BaseEntity wh
             var entity = await _repository.GetByIdAsync(keyValues);
             if (entity == null) return NotFound();
 
-            return Ok(_mapper.Map<T2>(entity));
+            return Ok(_mapper.Map<T3>(entity));
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
     }
-
-
 
     [HttpPost("Create")]
     [Authorize]
@@ -147,7 +145,7 @@ public class GenericController<T1, T2> : ControllerBase where T1 : BaseEntity wh
     Summary = "Altera informações de um item pelo ID",
     Description = "Espera um ID no formato JSON com as chaves primárias. Exemplo: {\"key1\":\"value\", \"key2\":value2,...}, e um objeto do mesmo tipo com as informações a serem modificadas."
     )]
-    public async Task<ActionResult> Put([FromQuery] string id, T2 dto)
+    public async Task<ActionResult> Put([FromQuery] string id, T4 dto)
     {
         try
         {

@@ -6,6 +6,4 @@ namespace NeurometaOncoAPI.Domain.DomainCore.Interfaces.RepositoryInterfaces;
 
 public interface IPsicologoRepository : IGenericRepository<Psicologo>
 {
-    Task<ApiResponse> GetPsicologoUser(string id);
-    Task<ApiResponse> GetAllPsicologoUser();
 }

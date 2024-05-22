@@ -16,6 +16,9 @@ public class User : IdentityUser
     public DateTime TokenExpiredAt { get; set; }
     public DateTime TokenCreatedAt { get; set; }
     public string EnderecoCompleto { get; set; }
+    public string Telefone { get; set; }
+    public string Cpf { get; set; }
+    public string Rg { get; set; }
     public string role { get; set; }
     
 }

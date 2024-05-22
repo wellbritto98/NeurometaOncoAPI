@@ -7,7 +7,5 @@ namespace NeurometaOncoAPI.Domain.DomainCore.Interfaces.RepositoryInterfaces;
 public interface IPacienteRepository : IGenericRepository<Paciente>
 {
 
-    Task<ApiResponse> GetPacienteUser(string id);
-    Task<ApiResponse> GetAllPacienteUser();
 
 }

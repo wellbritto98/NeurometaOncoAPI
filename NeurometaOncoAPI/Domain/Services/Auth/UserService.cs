@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Reflection;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -9,6 +10,10 @@ using Newtonsoft.Json;
 using NeurometaOncoAPI.Domain.DomainModels.Models.ApiResponse;
 using NeurometaOncoAPI.Domain.DomainModels.Models.Auth;
 using NeurometaOncoAPI.Infraestructure.Data.Dtos.Auth;
+using NeurometaOncoAPI.Domain.DomainModels.Models;
+using NeurometaOncoAPI.Infraestructure.Data.Dtos.Paciente;
+using NeurometaOncoAPI.Domain.DomainCore.Interfaces.RepositoryInterfaces;
+using Newtonsoft.Json.Linq;
 
 namespace NeurometaOncoAPI.Domain.Services.Auth;
 
@@ -21,10 +26,12 @@ public class UserService
     private IHttpContextAccessor _httpContextAccessor;
     private HttpClient _httpClient;
     private JwtService _jwtService;
+    private IPacienteRepository _pacienteRepository;
+    private IPsicologoRepository _psicologoRepository;
 
     public UserService(IMapper mapper, UserManager<User> userManager,
         SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender,
-        HttpClient httpClient, JwtService jwtService)
+        HttpClient httpClient, JwtService jwtService, IPacienteRepository pacienteRepository, IPsicologoRepository psicologoRepository)
     {
         _mapper = mapper;
         _userManager = userManager;
@@ -33,12 +40,40 @@ public class UserService
         _emailSender = emailSender;
         _httpClient = httpClient;
         _jwtService = jwtService;
+        _pacienteRepository = pacienteRepository;
+        _psicologoRepository= psicologoRepository;
     }
 
-    public async Task<ApiResponse> RegisterUser(RegisterUserDto dto)
+    public async Task<ApiResponse> RegisterUser(RegisterUserDto dto, string pacienteOrPsicologoDtoJson)
     {
         try
         {
+            Paciente paciente = null;
+            Psicologo psicologo = null;
+            var pacienteOrPsicologoDto = JsonConvert.DeserializeObject<JObject>(pacienteOrPsicologoDtoJson);
+
+            // Verificar se o json é um paciente ou psicologo
+            if (pacienteOrPsicologoDto == null)
+            {
+                return new ApiResponse { Success = false, Message = "Json inválido" };
+            }
+
+            // Verificar se contém a propriedade "crmMedico" ou "crp"
+            if (pacienteOrPsicologoDto["CrmMedico"] != null)
+            {
+                paciente = pacienteOrPsicologoDto.ToObject<Paciente>();
+                // mapeia o paciente
+            }
+            else if (pacienteOrPsicologoDto["Crp"] != null)
+            {
+                psicologo = pacienteOrPsicologoDto.ToObject<Psicologo>();
+                // mapeia o psicologo
+            }
+            else
+            {
+                return new ApiResponse { Success = false, Message = "Json inválido" };
+            }
+
             User user = _mapper.Map<User>(dto);
             user.UserName = user.Email;
             user.Email = user.Email.ToLower();
@@ -47,8 +82,7 @@ public class UserService
             {
                 return new ApiResponse { Success = false, Message = "Role não encontrada!" };
             }
-            user.role = dto.Role.ToUpper()=="PACIENTE" ? "Paciente" : "Psicologo";
-
+            user.role = dto.Role.ToUpper() == "PACIENTE" ? "Paciente" : "Psicologo";
 
             var today = DateTime.Today;
             var age = today.Year - user.DataNascimento.Year;
@@ -74,13 +108,41 @@ public class UserService
             }
 
             IdentityResult resultado = await _userManager.CreateAsync(user, dto.Password);
-            await _userManager.AddToRoleAsync(user, dto.Role.ToUpper()=="PACIENTE" ? "Paciente" : "Psicologo");
+            await _userManager.AddToRoleAsync(user, dto.Role.ToUpper() == "PACIENTE" ? "Paciente" : "Psicologo");
 
             if (!resultado.Succeeded)
             {
                 var errors = resultado.Errors.Select(e => e.Description);
                 return new ApiResponse
                 { Success = false, Message = $"Falha ao cadastrar usuário: {string.Join(", ", errors)}" };
+            }
+
+            var userId = _userManager.FindByEmailAsync(user.Email).Result.Id;
+
+            // cria um paciente ou Psicologo vinculado ao Id desse usuario
+            if (dto.Role.ToUpper() == "PACIENTE")
+            {
+                if (paciente != null)
+                {
+                    paciente.PacienteId = userId;
+                    await _pacienteRepository.AddAsync(paciente);
+                }
+                else
+                {
+                    return new ApiResponse { Success = false, Message = "Erro ao mapear paciente" };
+                }
+            }
+            else
+            {
+                if (psicologo != null)
+                {
+                    psicologo.PsicologoId = userId;
+                    await _psicologoRepository.AddAsync(psicologo);
+                }
+                else
+                {
+                    return new ApiResponse { Success = false, Message = "Erro ao mapear psicologo" };
+                }
             }
 
             var endpoint = "https://neurometaoncoapi.azurewebsites.net/resendConfirmationEmail";
@@ -145,7 +207,8 @@ public class UserService
                 {
                     HttpOnly = true,
                     SameSite = SameSiteMode.None,
-                    Secure = true
+                    Secure = true,
+                    Expires = DateTime.Now.AddDays(7)
                 });
 
                 var refreshToken = GenerateRefreshToken();

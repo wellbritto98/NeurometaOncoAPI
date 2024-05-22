@@ -3,9 +3,9 @@ using NeurometaOncoAPI.Infraestructure.Data.Dtos.Auth;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NeurometaOncoAPI.Infraestructure.Data.Dtos;
+namespace NeurometaOncoAPI.Infraestructure.Data.Dtos.Paciente;
 
-public class PacienteDto : BaseDto
+public class InsertPacienteDto : BaseDto
 {
 
     [Required]
@@ -29,6 +29,5 @@ public class PacienteDto : BaseDto
 
     [Required]
     public string UfCrm { get; set; }
-    public virtual GetUserDto User { get; set; }
 
 }

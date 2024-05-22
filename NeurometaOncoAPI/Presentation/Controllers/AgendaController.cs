@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
 using NeurometaOncoAPI.Domain.DomainModels.Models;
 using NeurometaOncoAPI.Domain.DomainCore.Interfaces.RepositoryInterfaces;
-using NeurometaOncoAPI.Infraestructure.Data.Dtos;
 using NeurometaOncoAPI.Presentation.Controllers.GenericController;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using NeurometaOncoAPI.Infraestructure.Data.Dtos.Agenda;
+using NeurometaOncoAPI.Infraestructure.Data.Dtos;
 
 namespace NeurometaOncoAPI.Presentation.Controllers;
 
 [SwaggerTag("Chaves primarias: PsicologoId, Data, PacienteId")]
 
-public class AgendaController : GenericController<Agenda, AgendaDto>
+public class AgendaController : GenericController<Agenda, InsertAgendaDto, ReadAgendaDto, UpdateAgendaDto>
 {
     protected readonly IAgendaRepository _repository;
     protected readonly IMapper _mapper;
@@ -29,7 +30,7 @@ public class AgendaController : GenericController<Agenda, AgendaDto>
         try
         {
             List<Agenda> agendas = await _repository.GetAgendasOcupadas(psicologoId);
-            var agendasDto = _mapper.Map<List<AgendaDto>>(agendas);
+            var agendasDto = _mapper.Map<List<InsertAgendaDto>>(agendas);
             return Ok(agendas);
         }
         catch (Exception ex)
@@ -47,7 +48,7 @@ public class AgendaController : GenericController<Agenda, AgendaDto>
         try
         {
             List<Agenda> agendas = await _repository.GetAgendasByPacienteId(pacienteId);
-            var agendasDto = _mapper.Map<List<AgendaDto>>(agendas);
+            var agendasDto = _mapper.Map<List<InsertAgendaDto>>(agendas);
             return Ok(agendas);
         }
         catch (Exception ex)
@@ -65,7 +66,7 @@ public class AgendaController : GenericController<Agenda, AgendaDto>
         try
         {
             List<Agenda> agendas = await _repository.GetAgendasByPsicologoId(psicologoId);
-            var agendasDto = _mapper.Map<List<AgendaDto>>(agendas);
+            var agendasDto = _mapper.Map<List<InsertAgendaDto>>(agendas);
             return Ok(agendas);
         }
         catch (Exception ex)
@@ -86,7 +87,7 @@ public class AgendaController : GenericController<Agenda, AgendaDto>
         try
         {
             List<Agenda> agendas = await _repository.GetConsultasConcluidasByPacienteId(pacienteId);
-            var agendasDto = _mapper.Map<List<AgendaDto>>(agendas);
+            var agendasDto = _mapper.Map<List<InsertAgendaDto>>(agendas);
             return Ok(agendas);
         }
         catch (Exception ex)
@@ -104,7 +105,7 @@ public class AgendaController : GenericController<Agenda, AgendaDto>
         try
         {
             List<Agenda> agendas = await _repository.GetConsultasConcluidasByPsicologoId(psicologoId);
-            var agendasDto = _mapper.Map<List<AgendaDto>>(agendas);
+            var agendasDto = _mapper.Map<List<InsertAgendaDto>>(agendas);
             return Ok(agendas);
         }
         catch (Exception ex)
